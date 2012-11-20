@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="ogrelamb" InternalType="">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+    </Plugin>
+  </Plugins>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="../src/physics.h"/>
+    <File Name="../src/objectmanager.h"/>
+    <File Name="../src/vehicle.cpp"/>
+    <File Name="../src/log.cpp"/>
+    <File Name="../src/database.h"/>
+    <File Name="../src/camera.h"/>
+    <File Name="../src/physics.cpp"/>
+    <File Name="../src/templates.h"/>
+    <File Name="../src/objectmanager.cpp"/>
+    <File Name="../src/framework.cpp"/>
+    <File Name="../src/actions.cpp"/>
+    <File Name="../src/object.h"/>
+    <File Name="../src/vehicle.h"/>
+    <File Name="../src/stdafx.h"/>
+    <File Name="../src/camera.cpp"/>
+    <File Name="../src/config.cpp"/>
+    <File Name="../src/play.h"/>
+    <File Name="../src/config.h"/>
+    <File Name="../src/main.cpp"/>
+    <File Name="../src/state.h"/>
+    <File Name="../src/play.cpp"/>
+    <File Name="../src/framework.h"/>
+    <File Name="../src/collision.cpp"/>
+    <File Name="../src/templates.cpp"/>
+    <File Name="../src/object.cpp"/>
+    <File Name="../src/log.h"/>
+    <File Name="../src/collision.h"/>
+    <File Name="../src/template.cpp"/>
+    <File Name="../src/actions.h"/>
+    <File Name="../src/template.h"/>
+    <File Name="../src/database.cpp"/>
+    <File Name="../src/stdafx.cpp"/>
+    <File Name="../src/character.cpp"/>
+    <File Name="../src/character.h"/>
+  </VirtualDirectory>
+  <Settings Type="Dynamic Library">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g" C_Options="-g" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="" IntermediateDirectory="./Debug" Command="../bin/Debug/ogrelamb" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="../working" PauseExecWhenProcTerminates="no"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[
+      ]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="yes">
+        <RebuildCommand/>
+        <CleanCommand>make clean</CleanCommand>
+        <BuildCommand>make -j8</BuildCommand>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand>rm -rf debug; mkdir debug; cd debug &amp;&amp; cmake -DCMAKE_BUILD_TYPE=Debug ../../</MakefileGenerationCommand>
+        <ThirdPartyToolName>Other</ThirdPartyToolName>
+        <WorkingDirectory>$(WorkspacePath)/debug</WorkingDirectory>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="" C_Options="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="-O2" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="" IntermediateDirectory="./Release" Command="../bin/Release/ogrelamb" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="../working" PauseExecWhenProcTerminates="no"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[
+      
+      ]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="yes">
+        <RebuildCommand/>
+        <CleanCommand>make clean</CleanCommand>
+        <BuildCommand>make -j8</BuildCommand>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand>rm -rf release; mkdir release; cd release &amp;&amp; cmake -DCMAKE_BUILD_TYPE=Release ../../</MakefileGenerationCommand>
+        <ThirdPartyToolName>Other</ThirdPartyToolName>
+        <WorkingDirectory>$(WorkspacePath)/release</WorkingDirectory>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>

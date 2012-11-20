@@ -1,0 +1,16 @@
+Alan Witkowski
+
+** Building **
+
+- Ogre3D -
+	http://www.ogre3d.org/download/sdk
+
+	Add OGRE_HOME environment variable that points to the SDK root directory (e.g. C:\OgreSDK)
+
+- Bullet Physics -
+	https://code.google.com/p/bullet/downloads/list
+
+	Add BULLET_ROOT environment variable that points to the SDK root directory (e.g. C:\BulletSDK)
+
+	Use cmake to build bullet. Build in the same directory as BULLET_ROOT.
+	If built correctly, .lib files should be ${BULLET_ROOT}/libs/Debug and ${BULLET_ROOT}/libs/Release

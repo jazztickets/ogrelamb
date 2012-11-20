@@ -1,0 +1,12 @@
+bin
+build
+*.cfg
+*.log
+*.dll
+*.blend1
+*.blend2
+codelite/debug
+codelite/release
+codelite/*.mk
+codelite/*.tags
+codelite/ogrelamb.workspace.*

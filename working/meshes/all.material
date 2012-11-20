@@ -1,0 +1,89 @@
+material default
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+			}
+		}
+	}
+}
+
+material crate
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			texture_unit
+			{
+				texture crate0.jpg
+			}
+		}
+	}
+}
+
+material grass0
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			texture_unit
+			{
+				scale 0.1 0.1
+				texture grass0.jpg
+			}
+		}
+	}
+}
+
+material checker
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			texture_unit
+			{
+				texture checker0.png
+			}
+		}
+	}
+}
+
+vertex_program vp1 glsl {
+    source vp1.txt
+}
+
+fragment_program fp1 glsl {
+    source fp1.txt
+}
+
+material shader
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture checker0.png
+			}
+			vertex_program_ref vp1
+			{
+				
+			}
+			
+			fragment_program_ref fp1
+			{
+			
+			}
+		}
+	}
+}
