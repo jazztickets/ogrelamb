@@ -77,7 +77,7 @@ void _Templates::Init() {
 	{
 	_Template *Template = new _Template;
 	Template->MeshFile = "terrain.mesh";
-	Template->Material = "grass0";
+	Template->Material = "shader";
 	Template->CollisionFile = "terrain.col";
 	Template->CollisionType = _Template::COLLISION_STATICMESH;
 	Template->ShapeType = _Template::SHAPE_TRIANGLEMESH;

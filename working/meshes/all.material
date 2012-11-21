@@ -73,7 +73,8 @@ material shader
 		{
 			texture_unit
 			{
-				texture checker0.png
+				scale 0.1 0.1
+				texture grass0.jpg
 			}
 			vertex_program_ref vp1
 			{
