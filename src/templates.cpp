@@ -29,7 +29,7 @@ void _Templates::Init() {
 	Template->MeshFile = "cylinder.mesh";
 	Template->Material = "crate";
 	//Template->Mass = 0.25f;
-	Template->ShapeType = _Template::SHAPE_CYLINDER;
+	Template->ShapeType = _Template::SHAPE_CAPSULE;
 	Template->Shape.setValue(1, 2, 0);
 	Template->CharacterType = _Template::CHARACTER_BASIC;
 	TemplateMap["character"] = Template;
