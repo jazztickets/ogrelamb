@@ -26,7 +26,7 @@ void _Templates::Init() {
 	
 	{
 	_Template *Template = new _Template;
-	Template->MeshFile = "cylinder.mesh";
+	Template->MeshFile = "capsule.mesh";
 	Template->Material = "crate";
 	//Template->Mass = 0.25f;
 	Template->ShapeType = _Template::SHAPE_CAPSULE;
