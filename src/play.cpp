@@ -66,11 +66,9 @@ void _PlayState::Init() {
 	Camera.Sensitivity[1] = Config.MouseY;
 	Camera.HandleMouse(0, 0);
 
-	
-    Light = Game.Scene->createLight();
-    Light->setType(Ogre::Light::LT_POINT);
-    Light->setDiffuseColour(Ogre::ColourValue(1, 1, 1));
-    Light->setPosition(0, 2, 2);
+	//Light = Game.Scene->createLight();
+	//Light->setType(Ogre::Light::LT_POINT);
+	//Light->setDiffuseColour(Ogre::ColourValue(1, 1, 1));
 
 	//ObjectManager.CreateObject(_Spawn(Templates["room"], "room"));
 	ObjectManager.CreateObject(_Spawn(Templates["terrain"], "terrain"));
@@ -218,7 +216,7 @@ void _PlayState::UpdateRender(float TimeStepRemainder, float TimeStep) {
 	Physics.World->synchronizeMotionStates();
 
 	btVector3 Position = Player->GraphicsTransform.getOrigin();
-	Light->setPosition(Position.x(), Position.y() + 2, Position.z());
+	//Light->setPosition(Position.x(), Position.y() + 2, Position.z());
 	Camera.UpdateRender(BlendFactor);
 }
 
