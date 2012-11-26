@@ -60,7 +60,7 @@ void _PlayState::Init() {
 	ObjectManager.Init();
 	Camera.SetPosition(btVector3(0, 2, 5));
 	Camera.Type = _Camera::THIRD_PERSON;
-	//Camera.Type = _Camera::FREEMOVE;
+	Camera.Type = _Camera::FREEMOVE;
 	Camera.Distance = 10.0f;
 	Camera.Sensitivity[0] = Config.MouseX;
 	Camera.Sensitivity[1] = Config.MouseY;
@@ -123,7 +123,7 @@ void _PlayState::Update(float FrameTime) {
 	
 	Camera.HandleMove(Move, Speed);
 	
-	if(Player) {
+	if(Player && Camera.Type != _Camera::FREEMOVE) {
 
 		if(Player->Character) {
 			Speed = 0.05f;
