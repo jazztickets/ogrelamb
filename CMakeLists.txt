@@ -63,6 +63,7 @@ include_directories(${OGRE_INCLUDE_DIRS})
 include_directories(${OIS_INCLUDE_DIRS})
 include_directories(${BULLET_INCLUDE_DIRS})
 include_directories(${OGRE_Terrain_INCLUDE_DIRS})
+include_directories(${OGRE_Paging_INCLUDE_DIRS})
 #include_directories(${LUA_INCLUDE_DIR})
 
 # add source files
@@ -75,16 +76,18 @@ add_executable(${CMAKE_PROJECT_NAME} ${MAIN_FILES})
 add_pch(${CMAKE_PROJECT_NAME} src/stdafx.cpp ${PROJECT_SOURCE_DIR}/src/stdafx.h)
 
 # link libraries
-target_link_libraries(${CMAKE_PROJECT_NAME} ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OIS_LIBRARIES} ${Boost_LIBRARIES} ${BULLET_LIBRARIES})
+target_link_libraries(${CMAKE_PROJECT_NAME} ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${OIS_LIBRARIES} ${Boost_LIBRARIES} ${BULLET_LIBRARIES})
 
 # copy ogre DLLs to working directory
 if(WIN32)
 	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/debug/OgreMain_d.dll" ${PROJECT_SOURCE_DIR}/working)
 	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/debug/OgreTerrain_d.dll" ${PROJECT_SOURCE_DIR}/working)
+	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/debug/OgrePaging_d.dll" ${PROJECT_SOURCE_DIR}/working)
 	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/debug/OIS_d.dll" ${PROJECT_SOURCE_DIR}/working)
 	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/debug/RenderSystem_GL_d.dll" ${PROJECT_SOURCE_DIR}/working)
 	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/release/OgreMain.dll" ${PROJECT_SOURCE_DIR}/working)
 	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/release/OgreTerrain.dll" ${PROJECT_SOURCE_DIR}/working)
+	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/release/OgrePaging.dll" ${PROJECT_SOURCE_DIR}/working)
 	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/release/OIS.dll" ${PROJECT_SOURCE_DIR}/working)
 	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "$ENV{OGRE_HOME}/bin/release/RenderSystem_GL.dll" ${PROJECT_SOURCE_DIR}/working)
 endif()

@@ -30,8 +30,9 @@
 #include "template.h"
 
 _PlayState PlayState;
-static Ogre::Light *Light;
-static Ogre::Terrain *Terrain;
+static Ogre::Light *Light = NULL;
+static Ogre::TerrainGroup *TerrainGroup = NULL;
+static Ogre::TerrainGlobalOptions *TerrainGlobalOptions = NULL;
 
 // Initializes the state
 void _PlayState::Init() {
@@ -71,8 +72,8 @@ void _PlayState::Init() {
 	//Light->setType(Ogre::Light::LT_POINT);
 	//Light->setDiffuseColour(Ogre::ColourValue(1, 1, 1));
 
-	//ObjectManager.CreateObject(_Spawn(Templates["room"], "room"));
-	ObjectManager.CreateObject(_Spawn(Templates["terrain"], "terrain"));
+	ObjectManager.CreateObject(_Spawn(Templates["room"], "room"));
+	//ObjectManager.CreateObject(_Spawn(Templates["terrain"], "terrain"));
 
 	Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 2, 4)));
 	Car = ObjectManager.CreateObject(_Spawn(Templates["car"], "player", btVector3(0, 2, 0), btQuaternion(Ogre::Math::DegreesToRadians(180), 0, 0)));
@@ -92,11 +93,35 @@ void _PlayState::Init() {
 	Camera.FollowObject = Player;
 
 	Physics.Enabled = true;
+
+	/*
+	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
+	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, 129, 50.0f);
+	TerrainGroup->setFilenameConvention("test", "dat");
+	TerrainGroup->setOrigin(Ogre::Vector3(0, 0, 0));
+
+	Ogre::Terrain::ImportData &DefaultSettings = TerrainGroup->getDefaultImportSettings();
+	DefaultSettings.terrainSize = 513;
+	DefaultSettings.worldSize = 50.0f;
+	DefaultSettings.inputScale = 2;
+	DefaultSettings.minBatchSize = 2;
+	DefaultSettings.maxBatchSize = 5;
+	DefaultSettings.layerList.resize(1);
+	DefaultSettings.layerList[0].worldSize = 50;
+	DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
+
+	TerrainGroup->defineTerrain(0, 0, 0.0f);
+	TerrainGroup->loadAllTerrains(true);
+
+	TerrainGroup->freeTemporaryResources();
+	*/
 }
 
 // Shuts the state down
 void _PlayState::Close() {
 
+	delete TerrainGroup;
+	delete TerrainGlobalOptions;
 	ObjectManager.Close();
 	Physics.Close();
 }

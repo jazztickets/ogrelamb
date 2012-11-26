@@ -25,7 +25,7 @@
 #include <OgreEntity.h>
 #include <OgreMaterialManager.h>
 #include <OgreWindowEventUtilities.h>
-#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
 #include <OISEvents.h>
 #include <OISInputManager.h>
 #include <OISMouse.h>
