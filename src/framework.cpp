@@ -40,9 +40,11 @@ void _Framework::Init(const std::string &Title) {
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		#if OGRE_DEBUG_MODE == 1
 			Root->loadPlugin("RenderSystem_GL_d.dll");
+			Root->loadPlugin("Plugin_CgProgramManager_d.dll");
 			//Root->loadPlugin("RenderSystem_Direct3D9_d.dll");
 		#else
 			Root->loadPlugin("RenderSystem_GL.dll");
+			Root->loadPlugin("Plugin_CgProgramManager.dll");
 			//Root->loadPlugin("RenderSystem_Direct3D9.dll");
 		#endif
 	#else
@@ -87,7 +89,8 @@ void _Framework::Init(const std::string &Title) {
 
 	// Create scene manager
 	Scene = Root->createSceneManager(Ogre::ST_GENERIC);
-	Scene->setAmbientLight(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
+	//Scene->setAmbientLight(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
+	Scene->setAmbientLight(Ogre::ColourValue(1.0f, 1.0f, 1.0f));
 	//Scene->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 	Scene->setShadowTechnique(Ogre::SHADOWTYPE_NONE);	
 

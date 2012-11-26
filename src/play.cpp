@@ -18,6 +18,7 @@
 #include "stdafx.h"
 #include "play.h"
 #include "framework.h"
+#include "log.h"
 #include "config.h"
 #include "objectmanager.h"
 #include "physics.h"
@@ -72,49 +73,53 @@ void _PlayState::Init() {
 	//Light->setType(Ogre::Light::LT_POINT);
 	//Light->setDiffuseColour(Ogre::ColourValue(1, 1, 1));
 
-	ObjectManager.CreateObject(_Spawn(Templates["room"], "room"));
+	//ObjectManager.CreateObject(_Spawn(Templates["room"], "room"));
 	//ObjectManager.CreateObject(_Spawn(Templates["terrain"], "terrain"));
 
-	Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 2, 4)));
-	Car = ObjectManager.CreateObject(_Spawn(Templates["car"], "player", btVector3(0, 2, 0), btQuaternion(Ogre::Math::DegreesToRadians(180), 0, 0)));
+	//Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 2, 4)));
+	//Car = ObjectManager.CreateObject(_Spawn(Templates["car"], "player", btVector3(0, 2, 0), btQuaternion(Ogre::Math::DegreesToRadians(180), 0, 0)));
 	//Ball = ObjectManager.CreateObject(Templates.Templates["sphere"], btVector3(0, 0.5, -4));
 
-	int BaseCount = 5;
-	float Y = 0.5;
-	while(BaseCount >= 0) {
-		for(int i = 0; i < BaseCount; i++) {
-			ObjectManager.CreateObject(_Spawn(Templates["crate"], "box", btVector3(-BaseCount / 2.0f + i, Y, -3)));
+	if(0) {
+		int BaseCount = 5;
+		float Y = 0.5;
+		while(BaseCount >= 0) {
+			for(int i = 0; i < BaseCount; i++) {
+				ObjectManager.CreateObject(_Spawn(Templates["crate"], "box", btVector3(-BaseCount / 2.0f + i, Y, -3)));
+			}
+			BaseCount--;
+			Y++;
 		}
-		BaseCount--;
-		Y++;
 	}
-	
+
 	Player = Character;
 	Camera.FollowObject = Player;
 
 	Physics.Enabled = true;
+	Ogre::Image Image;		
+	Image.load("terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
-	/*
 	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
-	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, 129, 50.0f);
-	TerrainGroup->setFilenameConvention("test", "dat");
-	TerrainGroup->setOrigin(Ogre::Vector3(0, 0, 0));
+	TerrainGlobalOptions->setCompositeMapAmbient(Game.Scene->getAmbientLight());
+	//TerrainGlobalOptions->setMaxPixelError(8);
+	//TerrainGlobalOptions->setCompositeMapDistance(50);
+	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, 129, 550.0f);
+	TerrainGroup->setOrigin(Ogre::Vector3(0, -100, 0));
 
 	Ogre::Terrain::ImportData &DefaultSettings = TerrainGroup->getDefaultImportSettings();
-	DefaultSettings.terrainSize = 513;
-	DefaultSettings.worldSize = 50.0f;
-	DefaultSettings.inputScale = 2;
-	DefaultSettings.minBatchSize = 2;
-	DefaultSettings.maxBatchSize = 5;
+	DefaultSettings.terrainSize = 129;
+	DefaultSettings.worldSize = 550.0f;
+	DefaultSettings.inputScale = 200;
+	DefaultSettings.minBatchSize = 9;
+	DefaultSettings.maxBatchSize = 17;
 	DefaultSettings.layerList.resize(1);
-	DefaultSettings.layerList[0].worldSize = 50;
+	DefaultSettings.layerList[0].worldSize = 10;
 	DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
 
-	TerrainGroup->defineTerrain(0, 0, 0.0f);
+	TerrainGroup->defineTerrain(0, 0, &Image);
 	TerrainGroup->loadAllTerrains(true);
 
 	TerrainGroup->freeTemporaryResources();
-	*/
 }
 
 // Shuts the state down
@@ -241,7 +246,7 @@ void _PlayState::UpdateRender(float TimeStepRemainder, float TimeStep) {
 	Physics.World->setTimeStepRemainder(TimeStepRemainder);
 	Physics.World->synchronizeMotionStates();
 
-	btVector3 Position = Player->GraphicsTransform.getOrigin();
+	//btVector3 Position = Player->GraphicsTransform.getOrigin();
 	//Light->setPosition(Position.x(), Position.y() + 2, Position.z());
 	Camera.UpdateRender(BlendFactor);
 }
