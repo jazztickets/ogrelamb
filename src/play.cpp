@@ -31,6 +31,7 @@
 
 _PlayState PlayState;
 static Ogre::Light *Light;
+static Ogre::Terrain *Terrain;
 
 // Initializes the state
 void _PlayState::Init() {
@@ -90,7 +91,7 @@ void _PlayState::Init() {
 	Player = Character;
 	Camera.FollowObject = Player;
 
-	Physics.Enabled = true;	
+	Physics.Enabled = true;
 }
 
 // Shuts the state down
