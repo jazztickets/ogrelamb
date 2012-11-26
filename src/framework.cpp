@@ -100,7 +100,10 @@ void _Framework::Init(const std::string &Title) {
 	Camera->setPosition(Ogre::Vector3(0.0f, 0.0f, 0.0f));
 	Camera->lookAt(Ogre::Vector3(0.0f, 0.0f, -1.0f));
 	Camera->setNearClipDistance(0.1f);
-	Camera->setFarClipDistance(500.0f);
+	if(Root->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE))
+		Camera->setFarClipDistance(0.0f);
+	else
+		Camera->setFarClipDistance(5000.0f);
 	Camera->setAspectRatio((float)Config.Width / Config.Height);
 
 	// Set up viewport

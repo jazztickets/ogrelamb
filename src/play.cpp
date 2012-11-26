@@ -56,7 +56,7 @@ void _PlayState::Init() {
 	Actions.AddKeyMap(OIS::KC_F, _Actions::Vehicle_SteerRight);
 	Actions.AddKeyMap(OIS::KC_SPACE, _Actions::Vehicle_Brake);
 	Actions.AddKeyMap(OIS::KC_A, _Actions::Vehicle_Flip);
-	Actions.AddKeyMap(OIS::KC_LSHIFT, _Actions::Vehicle_Boost);
+	//Actions.AddKeyMap(OIS::KC_LSHIFT, _Actions::Vehicle_Boost);
 	Actions.AddMouseMap(OIS::MB_Left, _Actions::Vehicle_Boost);
 	
 	Physics.Init();
@@ -101,17 +101,17 @@ void _PlayState::Init() {
 
 	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
 	TerrainGlobalOptions->setCompositeMapAmbient(Game.Scene->getAmbientLight());
-	//TerrainGlobalOptions->setMaxPixelError(8);
+	TerrainGlobalOptions->setMaxPixelError(8);
 	//TerrainGlobalOptions->setCompositeMapDistance(50);
-	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, 129, 550.0f);
+	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, 513, 500.0f);
 	TerrainGroup->setOrigin(Ogre::Vector3(0, -100, 0));
 
 	Ogre::Terrain::ImportData &DefaultSettings = TerrainGroup->getDefaultImportSettings();
-	DefaultSettings.terrainSize = 129;
-	DefaultSettings.worldSize = 550.0f;
+	DefaultSettings.terrainSize = 513;
+	DefaultSettings.worldSize = 500.0f;
 	DefaultSettings.inputScale = 200;
 	DefaultSettings.minBatchSize = 9;
-	DefaultSettings.maxBatchSize = 17;
+	DefaultSettings.maxBatchSize = 65;
 	DefaultSettings.layerList.resize(1);
 	DefaultSettings.layerList[0].worldSize = 10;
 	DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
