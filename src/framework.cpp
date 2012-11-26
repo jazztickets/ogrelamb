@@ -49,6 +49,7 @@ void _Framework::Init(const std::string &Title) {
 		#endif
 	#else
 		Root->loadPlugin("/usr/local/lib/OGRE/RenderSystem_GL.so");
+		Root->loadPlugin("/usr/local/lib/OGRE/Plugin_CgProgramManager.so");
 	#endif
 
 	// Get renderer
