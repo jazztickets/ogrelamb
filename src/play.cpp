@@ -56,8 +56,9 @@ void _PlayState::Init() {
 	Actions.AddKeyMap(OIS::KC_F, _Actions::Vehicle_SteerRight);
 	Actions.AddKeyMap(OIS::KC_SPACE, _Actions::Vehicle_Brake);
 	Actions.AddKeyMap(OIS::KC_A, _Actions::Vehicle_Flip);
-	//Actions.AddKeyMap(OIS::KC_LSHIFT, _Actions::Vehicle_Boost);
-	Actions.AddMouseMap(OIS::MB_Left, _Actions::Vehicle_Boost);
+	Actions.AddKeyMap(OIS::MB_Left, _Actions::Vehicle_Boost);
+	Actions.AddMouseMap(OIS::MB_Left, _Actions::Fast);
+	Actions.AddMouseMap(OIS::MB_Right, _Actions::Faster);
 	
 	Physics.Init();
 	ObjectManager.Init();
@@ -97,38 +98,54 @@ void _PlayState::Init() {
 	Camera.FollowObject = Player;
 
 	Physics.Enabled = true;
-	Ogre::Image Image;		
-	Image.load("terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	//Ogre::PixelBox PixelBox = Image.getPixelBox();
-	//Ogre::ColourValue Color = PixelBox.getColourAt(0, 0, 0);
-
 	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
 	TerrainGlobalOptions->setCompositeMapAmbient(Game.Scene->getAmbientLight());
 	TerrainGlobalOptions->setMaxPixelError(8);
 	//TerrainGlobalOptions->setCompositeMapDistance(50);
-	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, 129, 500.0f);
-	TerrainGroup->setOrigin(Ogre::Vector3(0, -100, 0));
+	Ogre::uint16 TerrainSize = 129;
+	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, TerrainSize, 1000);
+	TerrainGroup->setFilenameConvention("terrain", "dat");
+	TerrainGroup->setOrigin(Ogre::Vector3(0, 0, 0));
 
 	Ogre::Terrain::ImportData &DefaultSettings = TerrainGroup->getDefaultImportSettings();
-	DefaultSettings.terrainSize = 129;
-	DefaultSettings.worldSize = 500.0f;
-	DefaultSettings.inputScale = 200;
-	DefaultSettings.minBatchSize = 9;
-	DefaultSettings.maxBatchSize = 65;
+	DefaultSettings.inputScale = 100;
+	DefaultSettings.minBatchSize = 17;
+	//DefaultSettings.maxBatchSize = 129;
 	DefaultSettings.layerList.resize(1);
 	DefaultSettings.layerList[0].worldSize = 10;
 	DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
 
-	TerrainGroup->defineTerrain(0, 0, &Image);
+	float *Height = new float[TerrainSize * TerrainSize];
+	for(int i = 0; i < TerrainSize; i++) {
+		for(int j = 0; j < TerrainSize; j++) {
+			float gradx = float(j) / (float)TerrainSize;
+			float grady = float(i) / (float)TerrainSize;
+			Height[i * TerrainSize + j] = cos(gradx * Ogre::Math::PI * 4) * sin(grady * Ogre::Math::PI * 4);
+		}
+	}
+	//Ogre::String Filename = TerrainGroup->generateFilename(0, 0);
+	//if(Ogre::ResourceGroupManager::getSingleton().resourceExists(TerrainGroup->getResourceGroup(), Filename)) {
+	//	TerrainGroup->defineTerrain(0, 0);
+	//}
+	//else {
+		Ogre::Image Image;		
+		Image.load("terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		//TerrainGroup->defineTerrain(0, 0, &Image);
+		TerrainGroup->defineTerrain(0, 0, Height);
+		//TerrainGroup->defineTerrain(0, 0, 0.0f);
+		TerrainGroup->defineTerrain(1, 0, 0.0f);
+	//}
+		//Ogre::PixelBox PixelBox = Image.getPixelBox();
+		//Ogre::ColourValue Color = PixelBox.getColourAt(0, 0, 0);
 	TerrainGroup->loadAllTerrains(true);
-
 	TerrainGroup->freeTemporaryResources();
+	delete[] Height;
 }
 
 // Shuts the state down
 void _PlayState::Close() {
+	//TerrainGroup->saveAllTerrains(true);
 
-	TerrainGroup->removeAllTerrains();
 	delete TerrainGroup;
 	delete TerrainGlobalOptions;
 	ObjectManager.Close();
@@ -139,7 +156,7 @@ void _PlayState::Close() {
 void _PlayState::Update(float FrameTime) {
 	static float JumpTimer = 0.0f;
 
-	float Speed = 0.1f;
+	float CameraSpeed = 0.1f;
 	btVector3 Move(0, 0, 0);
 	if(Actions.GetState(_Actions::Forward))
 		Move[2] += -1; 
@@ -153,15 +170,17 @@ void _PlayState::Update(float FrameTime) {
 		Move[1] += -1;
 	if(Actions.GetState(_Actions::Descend))
 		Move[1] += 1;
-	if(Actions.GetState(_Actions::Vehicle_Boost))
-		Speed *= 3.0f;
+	if(Actions.GetState(_Actions::Fast))
+		CameraSpeed *= 10.0f;
+	if(Actions.GetState(_Actions::Faster))
+		CameraSpeed *= 10.0f;
 	
-	Camera.HandleMove(Move, Speed);
+	Camera.HandleMove(Move, CameraSpeed);
 	
 	if(Player && Camera.Type != _Camera::FREEMOVE) {
 
 		if(Player->Character) {
-			Speed = 0.05f;
+			float Speed = 0.05f;
 			
 			if(Actions.GetState(_Actions::Sprint)) {
 				Speed *= 2;
@@ -185,7 +204,6 @@ void _PlayState::Update(float FrameTime) {
 		}
 
 		if(Player->Vehicle) {
-
 			btRaycastVehicle *Vehicle = Player->Vehicle->RaycastVehicle;
 			//printf("%f\n", Vehicle->getCurrentSpeedKmHour());
 			if(Actions.GetState(_Actions::Vehicle_Brake)) {
@@ -266,7 +284,8 @@ void _PlayState::KeyEvent(int Key, bool Pressed) {
 	if(Pressed) {
 		switch(Key) {
 			case OIS::KC_ESCAPE:
-				Game.Done = true;
+				if(!TerrainGroup->isDerivedDataUpdateInProgress())
+					Game.Done = true;
 			break;
 			case OIS::KC_F1:
 				Camera.Sensitivity[1] *= -1;

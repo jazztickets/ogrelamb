@@ -2,6 +2,7 @@ bin
 build
 *.cfg
 *.log
+*.dat
 *.dll
 *.blend1
 *.blend2

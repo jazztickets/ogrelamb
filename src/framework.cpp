@@ -100,6 +100,7 @@ void _Framework::Init(const std::string &Title) {
 	Camera->setPosition(Ogre::Vector3(0.0f, 0.0f, 0.0f));
 	Camera->lookAt(Ogre::Vector3(0.0f, 0.0f, -1.0f));
 	Camera->setNearClipDistance(0.1f);
+	Camera->setLodBias(1.0f);
 	if(Root->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE))
 		Camera->setFarClipDistance(0.0f);
 	else

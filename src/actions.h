@@ -38,6 +38,8 @@ public:
 		Sprint,
 		Ascend,
 		Descend,
+		Fast,
+		Faster,
 		Vehicle_Accel,
 		Vehicle_Reverse,
 		Vehicle_SteerLeft,
