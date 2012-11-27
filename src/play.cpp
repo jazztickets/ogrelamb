@@ -75,6 +75,7 @@ void _PlayState::Init() {
 
 	//ObjectManager.CreateObject(_Spawn(Templates["room"], "room"));
 	//ObjectManager.CreateObject(_Spawn(Templates["terrain"], "terrain"));
+	//ObjectManager.CreateObject(_Spawn(Templates["terrain_ogre"], "terrain_ogre"));
 
 	//Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 2, 4)));
 	//Car = ObjectManager.CreateObject(_Spawn(Templates["car"], "player", btVector3(0, 2, 0), btQuaternion(Ogre::Math::DegreesToRadians(180), 0, 0)));
@@ -98,16 +99,18 @@ void _PlayState::Init() {
 	Physics.Enabled = true;
 	Ogre::Image Image;		
 	Image.load("terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//Ogre::PixelBox PixelBox = Image.getPixelBox();
+	//Ogre::ColourValue Color = PixelBox.getColourAt(0, 0, 0);
 
 	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
 	TerrainGlobalOptions->setCompositeMapAmbient(Game.Scene->getAmbientLight());
 	TerrainGlobalOptions->setMaxPixelError(8);
 	//TerrainGlobalOptions->setCompositeMapDistance(50);
-	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, 513, 500.0f);
+	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, 129, 500.0f);
 	TerrainGroup->setOrigin(Ogre::Vector3(0, -100, 0));
 
 	Ogre::Terrain::ImportData &DefaultSettings = TerrainGroup->getDefaultImportSettings();
-	DefaultSettings.terrainSize = 513;
+	DefaultSettings.terrainSize = 129;
 	DefaultSettings.worldSize = 500.0f;
 	DefaultSettings.inputScale = 200;
 	DefaultSettings.minBatchSize = 9;
@@ -125,6 +128,7 @@ void _PlayState::Init() {
 // Shuts the state down
 void _PlayState::Close() {
 
+	TerrainGroup->removeAllTerrains();
 	delete TerrainGroup;
 	delete TerrainGlobalOptions;
 	ObjectManager.Close();

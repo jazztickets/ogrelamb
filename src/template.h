@@ -31,6 +31,7 @@ public:
 		SHAPE_CAPSULE,
 		SHAPE_COMPOUND,
 		SHAPE_TRIANGLEMESH,
+		SHAPE_HEIGHTFIELD,
 	};
 
 	enum CharacterType {
@@ -46,6 +47,11 @@ public:
 	enum CollisionType {
 		COLLISION_NONE,
 		COLLISION_STATICMESH,
+	};
+
+	enum TerrainType {
+		TERRAIN_NONE,
+		TERRAIN_BASIC,
 	};
 
 	_Template();
@@ -71,6 +77,10 @@ public:
 	// Collision
 	int CollisionType;
 	std::string CollisionFile;
+
+	// Terrain
+	int TerrainType;
+	std::string HeightmapFile;
 
 };
 

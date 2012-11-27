@@ -16,60 +16,21 @@
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
 #include "stdafx.h"
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef TERRAIN_H
+#define TERRAIN_H
 
 // Forward Declarations
 class _Spawn;
-class _Collision;
-class _Terrain;
-class _Character;
-class _Vehicle;
 
-// Object class
-class _Object : public btMotionState {
+// Terrain
+class _Terrain {
 
 public:
 
-	_Object(const _Spawn &Spawn);
-	~_Object();
-
-	void Update(float FrameTime);
-
-	void BeginFrame();
-	void EndFrame();
-
-	// Flags
-	bool Deleted : 1;
-	bool MassOffset : 1;
-
-	// Graphics
-	Ogre::SceneNode *Node;
-	Ogre::Entity *Entity;
-
-	// Physics
-	btCollisionObject *Body;
-	btTransform CenterOfMassTransform;
-	btTransform GraphicsTransform;
-
-	// Character
-	_Character *Character;
-
-	// Vehicle
-	_Vehicle *Vehicle;
-
-	// Static Collision
-	_Collision *Collision;
-
-	// Terrain
-	_Terrain *Terrain;
-
-	void getWorldTransform(btTransform &Transform) const;
-	void setWorldTransform(const btTransform &Transform);
+	_Terrain(const _Spawn &Spawn);
+	~_Terrain();
 
 private:
-
-	btTransform ChildShapeOffset;
 
 };
 

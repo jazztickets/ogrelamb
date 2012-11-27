@@ -23,6 +23,7 @@
 #include "character.h"
 #include "vehicle.h"
 #include "collision.h"
+#include "terrain.h"
 
 // Constructor
 _Object::_Object(const _Spawn &Spawn) {
@@ -55,6 +56,13 @@ _Object::_Object(const _Spawn &Spawn) {
 		break;
 	}
 
+	// Terrain type
+	switch(Template->TerrainType) {
+		case _Template::TERRAIN_BASIC:
+			Terrain = new _Terrain(Spawn);
+		break;
+	}
+
 	// Set up shape
 	btCollisionShape *BasicShape = NULL;
 	btVector3 HalfExtents = Template->Shape * 0.5f;
@@ -75,6 +83,10 @@ _Object::_Object(const _Spawn &Spawn) {
 			if(Collision)
 				BasicShape = new btBvhTriangleMeshShape(Collision->TriangleIndexVertexArray, true);
 		break;
+		case _Template::SHAPE_HEIGHTFIELD:
+			//if(Terrain)
+				//BasicShape = new btHeightfieldTerrainShape(Template->Scale.x(), Template->Scale.y(), 0);
+		break;
 	}
 
 	// Handle center of mass offset
@@ -94,7 +106,8 @@ _Object::_Object(const _Spawn &Spawn) {
 		Shape = BasicShape;
 
 	// Set scaling
-	Shape->setLocalScaling(btVector3(Template->Scale.x(), Template->Scale.y(), Template->Scale.z()));
+	if(Shape)
+		Shape->setLocalScaling(btVector3(Template->Scale.x(), Template->Scale.y(), Template->Scale.z()));
 
 	// Spawn the object using Spawn.Position as the graphics transform
 	CenterOfMassTransform.setIdentity();

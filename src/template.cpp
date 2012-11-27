@@ -48,7 +48,10 @@ _Template::_Template() {
 	// Collision
 	int CollisionType = COLLISION_NONE;
 	CollisionFile = "";
-	
+
+	// Terrain
+	int TerrainType = TERRAIN_NONE;
+	HeightmapFile = "";	
 }
 
 // Default constructor
