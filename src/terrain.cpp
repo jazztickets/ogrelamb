@@ -25,9 +25,21 @@
 // Constructor
 _Terrain::_Terrain(const _Spawn &Spawn) {
 	
+	Size = 129;
+	HeightData = new float[Size * Size];
+	for(int i = 0; i < Size; i++) {
+		for(int j = 0; j < Size; j++) {
+			float gradx = float(j) / (float)Size;
+			float grady = float(i) / (float)Size;
+			HeightData[(Size - i - 1) * Size + j] = 5 * cos(gradx * Ogre::Math::PI * 4) * sin(grady * Ogre::Math::PI * 4);
+			//Height[i * Size + j] = 0;//cos(gradx * Ogre::Math::PI * 4) * sin(grady * Ogre::Math::PI * 4);
+		}
+	}
+
 }
 
 // Destructor
 _Terrain::~_Terrain() {
 
+	delete[] HeightData;
 }

@@ -84,8 +84,14 @@ _Object::_Object(const _Spawn &Spawn) {
 				BasicShape = new btBvhTriangleMeshShape(Collision->TriangleIndexVertexArray, true);
 		break;
 		case _Template::SHAPE_HEIGHTFIELD:
-			//if(Terrain)
-				//BasicShape = new btHeightfieldTerrainShape(Template->Scale.x(), Template->Scale.y(), 0);
+			if(Terrain) {
+
+
+				btHeightfieldTerrainShape *HeightField = new btHeightfieldTerrainShape(Terrain->Size, Terrain->Size, Terrain->HeightData, 5, -50, 50, 1, PHY_FLOAT, false);
+				//HeightField->setUseDiamondSubdivision(true);
+				//HeightField->setLocalScaling(btVector3(100, 5, 100));
+				BasicShape = HeightField;
+			}
 		break;
 	}
 

@@ -64,7 +64,7 @@ void _PlayState::Init() {
 	ObjectManager.Init();
 	Camera.SetPosition(btVector3(0, 2, 5));
 	Camera.Type = _Camera::THIRD_PERSON;
-	Camera.Type = _Camera::FREEMOVE;
+	//Camera.Type = _Camera::FREEMOVE;
 	Camera.Distance = 10.0f;
 	Camera.Sensitivity[0] = Config.MouseX;
 	Camera.Sensitivity[1] = Config.MouseY;
@@ -76,10 +76,10 @@ void _PlayState::Init() {
 
 	//ObjectManager.CreateObject(_Spawn(Templates["room"], "room"));
 	//ObjectManager.CreateObject(_Spawn(Templates["terrain"], "terrain"));
-	//ObjectManager.CreateObject(_Spawn(Templates["terrain_ogre"], "terrain_ogre"));
+	ObjectManager.CreateObject(_Spawn(Templates["terrain_ogre"], "terrain_ogre"));
 
-	//Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 2, 4)));
-	//Car = ObjectManager.CreateObject(_Spawn(Templates["car"], "player", btVector3(0, 2, 0), btQuaternion(Ogre::Math::DegreesToRadians(180), 0, 0)));
+	Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 5, 0)));
+	Car = ObjectManager.CreateObject(_Spawn(Templates["car"], "player", btVector3(0, 2, 0), btQuaternion(Ogre::Math::DegreesToRadians(180), 0, 0)));
 	//Ball = ObjectManager.CreateObject(Templates.Templates["sphere"], btVector3(0, 0.5, -4));
 
 	if(0) {
@@ -116,12 +116,12 @@ void _PlayState::Init() {
 
 	//TerrainGlobalOptions->setCompositeMapDistance(500);
 	Ogre::uint16 TerrainSize = 129;
-	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, TerrainSize, 100);
+	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, TerrainSize, 128);
 	TerrainGroup->setFilenameConvention("terrain", "dat");
 	TerrainGroup->setOrigin(Ogre::Vector3(0, 0, 0));
 
 	Ogre::Terrain::ImportData &DefaultSettings = TerrainGroup->getDefaultImportSettings();
-	DefaultSettings.inputScale = 10;
+	DefaultSettings.inputScale = 5;
 	//DefaultSettings.minBatchSize = 17;
 	//DefaultSettings.maxBatchSize = 129;
 	DefaultSettings.layerList.resize(1);
@@ -131,7 +131,7 @@ void _PlayState::Init() {
 
 	if(Ogre::ResourceGroupManager::getSingleton().resourceExists(TerrainGroup->getResourceGroup(), TerrainGroup->generateFilename(0, 0))) {
 		TerrainGroup->defineTerrain(0, 0);
-		TerrainGroup->defineTerrain(1, 0);
+		//TerrainGroup->defineTerrain(1, 0);
 	}
 	else {
 		float *Height = new float[TerrainSize * TerrainSize];
@@ -143,8 +143,9 @@ void _PlayState::Init() {
 			}
 		}
 
-		TerrainGroup->defineTerrain(1, 0, 0.0f);
+		//TerrainGroup->defineTerrain(1, 0, 0.0f);
 		TerrainGroup->defineTerrain(0, 0, Height);
+		//TerrainGroup->defineTerrain(0, 0, 0.0f);
 		delete[] Height;
 	}
 	//TerrainGroup->defineTerrain(1, 0, 0.0f);

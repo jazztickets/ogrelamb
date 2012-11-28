@@ -30,6 +30,9 @@ public:
 	_Terrain(const _Spawn &Spawn);
 	~_Terrain();
 
+	Ogre::uint16 Size;
+	float *HeightData;
+
 private:
 
 };
