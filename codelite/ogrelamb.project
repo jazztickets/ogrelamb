@@ -42,6 +42,8 @@
     <File Name="../src/stdafx.cpp"/>
     <File Name="../src/character.cpp"/>
     <File Name="../src/character.h"/>
+    <File Name="../src/terrain.cpp"/>
+    <File Name="../src/terrain.h"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
@@ -62,6 +64,7 @@
       <General OutputFile="" IntermediateDirectory="./Debug" Command="../bin/Debug/ogrelamb" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="../working" PauseExecWhenProcTerminates="no"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -100,6 +103,7 @@
       <General OutputFile="" IntermediateDirectory="./Release" Command="../bin/Release/ogrelamb" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="../working" PauseExecWhenProcTerminates="no"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       ]]>
       </Environment>
