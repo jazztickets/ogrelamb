@@ -56,7 +56,7 @@ void _PlayState::Init() {
 	Actions.AddKeyMap(OIS::KC_F, _Actions::Vehicle_SteerRight);
 	Actions.AddKeyMap(OIS::KC_SPACE, _Actions::Vehicle_Brake);
 	Actions.AddKeyMap(OIS::KC_A, _Actions::Vehicle_Flip);
-	Actions.AddKeyMap(OIS::MB_Left, _Actions::Vehicle_Boost);
+	Actions.AddMouseMap(OIS::MB_Left, _Actions::Vehicle_Boost);
 	Actions.AddMouseMap(OIS::MB_Left, _Actions::Fast);
 	Actions.AddMouseMap(OIS::MB_Right, _Actions::Faster);
 	
@@ -78,7 +78,7 @@ void _PlayState::Init() {
 	//ObjectManager.CreateObject(_Spawn(Templates["terrain"], "terrain"));
 	ObjectManager.CreateObject(_Spawn(Templates["terrain_ogre"], "terrain_ogre"));
 
-	Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 5, 0)));
+	Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 5, 5)));
 	Car = ObjectManager.CreateObject(_Spawn(Templates["car"], "player", btVector3(0, 2, 0), btQuaternion(Ogre::Math::DegreesToRadians(180), 0, 0)));
 	//Ball = ObjectManager.CreateObject(Templates.Templates["sphere"], btVector3(0, 0.5, -4));
 
