@@ -106,7 +106,7 @@ void _PlayState::Init() {
 	Light->setDiffuseColour(Ogre::ColourValue::White);
 	Light->setSpecularColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
 
-	Game.Scene->setAmbientLight(Ogre::ColourValue(0.2f, 0.2f, 0.2f));
+	Game.Scene->setAmbientLight(Ogre::ColourValue(0.3f, 0.3f, 0.3f));
 
 	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
 	TerrainGlobalOptions->setCompositeMapAmbient(Game.Scene->getAmbientLight());
@@ -127,11 +127,11 @@ void _PlayState::Init() {
 	DefaultSettings.layerList.resize(1);
 	DefaultSettings.layerList[0].worldSize = 10;
 	DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
-	//DefaultSettings.layerList[0].worldSize = 10;
-	//DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
+	DefaultSettings.layerList[0].textureNames.push_back("normal.png");
 
 	if(Ogre::ResourceGroupManager::getSingleton().resourceExists(TerrainGroup->getResourceGroup(), TerrainGroup->generateFilename(0, 0))) {
 		TerrainGroup->defineTerrain(0, 0);
+		TerrainGroup->defineTerrain(1, 0);
 	}
 	else {
 		float *Height = new float[TerrainSize * TerrainSize];
@@ -143,7 +143,7 @@ void _PlayState::Init() {
 			}
 		}
 
-		//TerrainGroup->defineTerrain(0, 0, 0.0f);
+		TerrainGroup->defineTerrain(1, 0, 0.0f);
 		TerrainGroup->defineTerrain(0, 0, Height);
 		delete[] Height;
 	}
