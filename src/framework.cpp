@@ -90,8 +90,8 @@ void _Framework::Init(const std::string &Title) {
 
 	// Create scene manager
 	Scene = Root->createSceneManager(Ogre::ST_GENERIC);
-	//Scene->setAmbientLight(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
-	Scene->setAmbientLight(Ogre::ColourValue(1.0f, 1.0f, 1.0f));
+	Scene->setAmbientLight(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
+	//Scene->setAmbientLight(Ogre::ColourValue(1.0f, 1.0f, 1.0f));
 	//Scene->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 	Scene->setShadowTechnique(Ogre::SHADOWTYPE_NONE);	
 

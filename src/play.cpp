@@ -96,56 +96,72 @@ void _PlayState::Init() {
 
 	Player = Character;
 	Camera.FollowObject = Player;
-
 	Physics.Enabled = true;
+
+	Ogre::Vector3 LightDirection(1, -1, 0);
+	LightDirection.normalise();
+	Light = Game.Scene->createLight();
+	Light->setType(Ogre::Light::LT_DIRECTIONAL);
+	Light->setDirection(LightDirection);
+	Light->setDiffuseColour(Ogre::ColourValue::White);
+	Light->setSpecularColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
+
+	Game.Scene->setAmbientLight(Ogre::ColourValue(0.2f, 0.2f, 0.2f));
+
 	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
 	TerrainGlobalOptions->setCompositeMapAmbient(Game.Scene->getAmbientLight());
+	TerrainGlobalOptions->setCompositeMapDiffuse(Light->getDiffuseColour());
+	TerrainGlobalOptions->setLightMapDirection(LightDirection);
 	TerrainGlobalOptions->setMaxPixelError(8);
-	//TerrainGlobalOptions->setCompositeMapDistance(50);
+
+	//TerrainGlobalOptions->setCompositeMapDistance(500);
 	Ogre::uint16 TerrainSize = 129;
-	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, TerrainSize, 1000);
+	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, TerrainSize, 100);
 	TerrainGroup->setFilenameConvention("terrain", "dat");
 	TerrainGroup->setOrigin(Ogre::Vector3(0, 0, 0));
 
 	Ogre::Terrain::ImportData &DefaultSettings = TerrainGroup->getDefaultImportSettings();
-	DefaultSettings.inputScale = 100;
-	DefaultSettings.minBatchSize = 17;
+	DefaultSettings.inputScale = 10;
+	//DefaultSettings.minBatchSize = 17;
 	//DefaultSettings.maxBatchSize = 129;
 	DefaultSettings.layerList.resize(1);
 	DefaultSettings.layerList[0].worldSize = 10;
 	DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
+	//DefaultSettings.layerList[0].worldSize = 10;
+	//DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
 
-	float *Height = new float[TerrainSize * TerrainSize];
-	for(int i = 0; i < TerrainSize; i++) {
-		for(int j = 0; j < TerrainSize; j++) {
-			float gradx = float(j) / (float)TerrainSize;
-			float grady = float(i) / (float)TerrainSize;
-			Height[i * TerrainSize + j] = cos(gradx * Ogre::Math::PI * 4) * sin(grady * Ogre::Math::PI * 4);
-		}
+	if(Ogre::ResourceGroupManager::getSingleton().resourceExists(TerrainGroup->getResourceGroup(), TerrainGroup->generateFilename(0, 0))) {
+		TerrainGroup->defineTerrain(0, 0);
 	}
-	//Ogre::String Filename = TerrainGroup->generateFilename(0, 0);
-	//if(Ogre::ResourceGroupManager::getSingleton().resourceExists(TerrainGroup->getResourceGroup(), Filename)) {
-	//	TerrainGroup->defineTerrain(0, 0);
-	//}
-	//else {
-		Ogre::Image Image;		
-		Image.load("terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-		//TerrainGroup->defineTerrain(0, 0, &Image);
-		TerrainGroup->defineTerrain(0, 0, Height);
+	else {
+		float *Height = new float[TerrainSize * TerrainSize];
+		for(int i = 0; i < TerrainSize; i++) {
+			for(int j = 0; j < TerrainSize; j++) {
+				float gradx = float(j) / (float)TerrainSize;
+				float grady = float(i) / (float)TerrainSize;
+				Height[i * TerrainSize + j] = cos(gradx * Ogre::Math::PI * 4) * sin(grady * Ogre::Math::PI * 4);
+			}
+		}
+
 		//TerrainGroup->defineTerrain(0, 0, 0.0f);
-		TerrainGroup->defineTerrain(1, 0, 0.0f);
-	//}
-		//Ogre::PixelBox PixelBox = Image.getPixelBox();
-		//Ogre::ColourValue Color = PixelBox.getColourAt(0, 0, 0);
+		TerrainGroup->defineTerrain(0, 0, Height);
+		delete[] Height;
+	}
+	//TerrainGroup->defineTerrain(1, 0, 0.0f);
 	TerrainGroup->loadAllTerrains(true);
 	TerrainGroup->freeTemporaryResources();
-	delete[] Height;
+
+	//else {
+		//Ogre::Image Image;		
+		//Image.load("terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		//TerrainGroup->defineTerrain(0, 0, &Image);
+	//}
 }
 
 // Shuts the state down
 void _PlayState::Close() {
-	//TerrainGroup->saveAllTerrains(true);
-
+	TerrainGroup->saveAllTerrains(true);
+	Game.Scene->destroyAllLights();
 	delete TerrainGroup;
 	delete TerrainGlobalOptions;
 	ObjectManager.Close();
