@@ -27,7 +27,7 @@ _Terrain::_Terrain(const _Spawn &Spawn) {
 	Size = 129;
 	BulletHeight = NULL;
 
-	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, Size, 128);
+	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, Size, 256);
 	TerrainGroup->setFilenameConvention("terrain", "dat");
 	TerrainGroup->setOrigin(Ogre::Vector3(0, 0, 0));
 
@@ -75,7 +75,7 @@ void _Terrain::CreateProceduralHeight(int SlotX, int SlotY, int Size, float *Dat
 		for(int j = 0; j < Size; j++) {
 			float x = float(j) / (float)Size;
 			float y = float(i) / (float)Size;
-			Data[i * Size + j] = 5 * cos(x * Ogre::Math::PI * 4) * sin(y * Ogre::Math::PI * 2);
+			Data[i * Size + j] = 10 * cos(x * Ogre::Math::PI * 4) * sin(y * Ogre::Math::PI * 4);
 		}
 	}
 }
