@@ -35,6 +35,7 @@ _Object::_Object(const _Spawn &Spawn) {
 	Character = NULL;
 	Vehicle = NULL;
 	Collision = NULL;
+	Terrain = NULL;
 
 	const _Template *Template = Spawn.Template;
 
@@ -85,7 +86,7 @@ _Object::_Object(const _Spawn &Spawn) {
 		break;
 		case _Template::SHAPE_HEIGHTFIELD:
 			if(Terrain) {
-				btHeightfieldTerrainShape *HeightField = new btHeightfieldTerrainShape(Terrain->Size, Terrain->Size, Terrain->HeightData, 0, -50, 50, 1, PHY_FLOAT, true);
+				btHeightfieldTerrainShape *HeightField = new btHeightfieldTerrainShape(Terrain->Size, Terrain->Size, Terrain->BulletHeight, 0, -50, 50, 1, PHY_FLOAT, true);
 				HeightField->setUseDiamondSubdivision(true);
 				BasicShape = HeightField;
 			}
@@ -182,6 +183,9 @@ _Object::~_Object() {
 
 	if(Collision)
 		delete Collision;
+
+	if(Terrain)
+		delete Terrain;
 }
 
 // Update the object

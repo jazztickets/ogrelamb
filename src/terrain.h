@@ -31,9 +31,13 @@ public:
 	~_Terrain();
 
 	Ogre::uint16 Size;
-	float *HeightData;
+	float *BulletHeight;
+	Ogre::TerrainGroup *TerrainGroup;
 
 private:
+
+	void CreateProceduralHeight(int SlotX, int SlotY, int Size, float *Data);
+	void CreateBulletHeightData(const float *Data);
 
 };
 

@@ -49,6 +49,7 @@ public:
 	Ogre::RenderWindow *Window;
 	Ogre::Camera *Camera;
 	Ogre::ulong WindowHandle;
+	Ogre::TerrainGlobalOptions *TerrainGlobalOptions;
 
 	// Input
 	OIS::InputManager *InputManager;

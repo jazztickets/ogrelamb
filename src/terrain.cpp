@@ -24,22 +24,58 @@
 
 // Constructor
 _Terrain::_Terrain(const _Spawn &Spawn) {
-	
 	Size = 129;
-	HeightData = new float[Size * Size];
-	for(int i = 0; i < Size; i++) {
-		for(int j = 0; j < Size; j++) {
-			float gradx = float(j) / (float)Size;
-			float grady = float(i) / (float)Size;
-			HeightData[(Size - i - 1) * Size + j] = 5 * cos(gradx * Ogre::Math::PI * 4) * sin(grady * Ogre::Math::PI * 4);
-			//Height[i * Size + j] = 0;//cos(gradx * Ogre::Math::PI * 4) * sin(grady * Ogre::Math::PI * 4);
-		}
-	}
+	BulletHeight = NULL;
 
+	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, Size, 128);
+	TerrainGroup->setFilenameConvention("terrain", "dat");
+	TerrainGroup->setOrigin(Ogre::Vector3(0, 0, 0));
+
+	Ogre::Terrain::ImportData &DefaultSettings = TerrainGroup->getDefaultImportSettings();
+	DefaultSettings.layerList.resize(1);
+	DefaultSettings.layerList[0].worldSize = 10;
+	DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
+	DefaultSettings.layerList[0].textureNames.push_back("normal.png");
+
+	if(Ogre::ResourceGroupManager::getSingleton().resourceExists(TerrainGroup->getResourceGroup(), TerrainGroup->generateFilename(0, 0))) {
+		TerrainGroup->defineTerrain(0, 0);
+	}
+	else {
+		float *OgreHeight = new float[Size * Size];
+		CreateProceduralHeight(0, 0, Size, OgreHeight);
+		TerrainGroup->defineTerrain(0, 0, OgreHeight);
+		delete[] OgreHeight;
+	}
+	TerrainGroup->loadAllTerrains(true);
+	TerrainGroup->freeTemporaryResources();
+	CreateBulletHeightData(TerrainGroup->getTerrain(0, 0)->getHeightData());
 }
 
 // Destructor
 _Terrain::~_Terrain() {
+	TerrainGroup->saveAllTerrains(true);
+	delete TerrainGroup;
+	delete[] BulletHeight;
+}
 
-	delete[] HeightData;
+// Create a copy of the height map data and reflect about x-axis for bullet
+void _Terrain::CreateBulletHeightData(const float *Data) {
+	if(BulletHeight)
+		return;
+
+	BulletHeight = new float[Size * Size];
+	for(Ogre::uint16 i = 0; i < Size; i++) {
+		memcpy(BulletHeight + Size * i, Data + (Size - i - 1) * Size, sizeof(float) * Size);
+	}
+}
+
+// Create some terrain
+void _Terrain::CreateProceduralHeight(int SlotX, int SlotY, int Size, float *Data) {
+	for(int i = 0; i < Size; i++) {
+		for(int j = 0; j < Size; j++) {
+			float x = float(j) / (float)Size;
+			float y = float(i) / (float)Size;
+			Data[i * Size + j] = 5 * cos(x * Ogre::Math::PI * 4) * sin(y * Ogre::Math::PI * 2);
+		}
+	}
 }

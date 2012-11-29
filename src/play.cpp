@@ -32,8 +32,6 @@
 
 _PlayState PlayState;
 static Ogre::Light *Light = NULL;
-static Ogre::TerrainGroup *TerrainGroup = NULL;
-static Ogre::TerrainGlobalOptions *TerrainGlobalOptions = NULL;
 
 // Initializes the state
 void _PlayState::Init() {
@@ -64,22 +62,33 @@ void _PlayState::Init() {
 	ObjectManager.Init();
 	Camera.SetPosition(btVector3(0, 2, 5));
 	Camera.Type = _Camera::THIRD_PERSON;
-	//Camera.Type = _Camera::FREEMOVE;
+	Camera.Type = _Camera::FREEMOVE;
 	Camera.Distance = 10.0f;
 	Camera.Sensitivity[0] = Config.MouseX;
 	Camera.Sensitivity[1] = Config.MouseY;
 	Camera.HandleMouse(0, 0);
 
-	//Light = Game.Scene->createLight();
-	//Light->setType(Ogre::Light::LT_POINT);
-	//Light->setDiffuseColour(Ogre::ColourValue(1, 1, 1));
+	Ogre::Vector3 LightDirection(1, -1, 0);
+	LightDirection.normalise();
+	Light = Game.Scene->createLight();
+	Light->setType(Ogre::Light::LT_DIRECTIONAL);
+	Light->setDirection(LightDirection);
+	Light->setDiffuseColour(Ogre::ColourValue::White);
+	Light->setSpecularColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
+
+	Game.Scene->setAmbientLight(Ogre::ColourValue(0.3f, 0.3f, 0.3f));
+
+	Game.TerrainGlobalOptions->setCompositeMapAmbient(Game.Scene->getAmbientLight());
+	Game.TerrainGlobalOptions->setCompositeMapDiffuse(Light->getDiffuseColour());
+	Game.TerrainGlobalOptions->setLightMapDirection(LightDirection);
+	Game.TerrainGlobalOptions->setMaxPixelError(8);
 
 	//ObjectManager.CreateObject(_Spawn(Templates["room"], "room"));
 	//ObjectManager.CreateObject(_Spawn(Templates["terrain"], "terrain"));
 	ObjectManager.CreateObject(_Spawn(Templates["terrain_ogre"], "terrain_ogre"));
 
-	Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 5, 5)));
-	Car = ObjectManager.CreateObject(_Spawn(Templates["car"], "player", btVector3(0, 2, 0), btQuaternion(Ogre::Math::DegreesToRadians(180), 0, 0)));
+	Character = ObjectManager.CreateObject(_Spawn(Templates["character"], "character", btVector3(0, 10, 5)));
+	Car = ObjectManager.CreateObject(_Spawn(Templates["car"], "player", btVector3(0, 10, 0), btQuaternion(btRadians(180), 0, 0)));
 	//Ball = ObjectManager.CreateObject(Templates.Templates["sphere"], btVector3(0, 0.5, -4));
 
 	if(0) {
@@ -97,74 +106,11 @@ void _PlayState::Init() {
 	Player = Character;
 	Camera.FollowObject = Player;
 	Physics.Enabled = true;
-
-	Ogre::Vector3 LightDirection(1, -1, 0);
-	LightDirection.normalise();
-	Light = Game.Scene->createLight();
-	Light->setType(Ogre::Light::LT_DIRECTIONAL);
-	Light->setDirection(LightDirection);
-	Light->setDiffuseColour(Ogre::ColourValue::White);
-	Light->setSpecularColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
-
-	Game.Scene->setAmbientLight(Ogre::ColourValue(0.3f, 0.3f, 0.3f));
-
-	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
-	TerrainGlobalOptions->setCompositeMapAmbient(Game.Scene->getAmbientLight());
-	TerrainGlobalOptions->setCompositeMapDiffuse(Light->getDiffuseColour());
-	TerrainGlobalOptions->setLightMapDirection(LightDirection);
-	TerrainGlobalOptions->setMaxPixelError(8);
-
-	//TerrainGlobalOptions->setCompositeMapDistance(500);
-	Ogre::uint16 TerrainSize = 129;
-	TerrainGroup = new Ogre::TerrainGroup(Game.Scene, Ogre::Terrain::ALIGN_X_Z, TerrainSize, 128);
-	TerrainGroup->setFilenameConvention("terrain", "dat");
-	TerrainGroup->setOrigin(Ogre::Vector3(0, 0, 0));
-
-	Ogre::Terrain::ImportData &DefaultSettings = TerrainGroup->getDefaultImportSettings();
-	DefaultSettings.inputScale = 5;
-	//DefaultSettings.minBatchSize = 17;
-	//DefaultSettings.maxBatchSize = 129;
-	DefaultSettings.layerList.resize(1);
-	DefaultSettings.layerList[0].worldSize = 10;
-	DefaultSettings.layerList[0].textureNames.push_back("grass0.jpg");
-	DefaultSettings.layerList[0].textureNames.push_back("normal.png");
-
-	if(Ogre::ResourceGroupManager::getSingleton().resourceExists(TerrainGroup->getResourceGroup(), TerrainGroup->generateFilename(0, 0))) {
-		TerrainGroup->defineTerrain(0, 0);
-		//TerrainGroup->defineTerrain(1, 0);
-	}
-	else {
-		float *Height = new float[TerrainSize * TerrainSize];
-		for(int i = 0; i < TerrainSize; i++) {
-			for(int j = 0; j < TerrainSize; j++) {
-				float gradx = float(j) / (float)TerrainSize;
-				float grady = float(i) / (float)TerrainSize;
-				Height[i * TerrainSize + j] = cos(gradx * Ogre::Math::PI * 4) * sin(grady * Ogre::Math::PI * 4);
-			}
-		}
-
-		//TerrainGroup->defineTerrain(1, 0, 0.0f);
-		TerrainGroup->defineTerrain(0, 0, Height);
-		//TerrainGroup->defineTerrain(0, 0, 0.0f);
-		delete[] Height;
-	}
-	//TerrainGroup->defineTerrain(1, 0, 0.0f);
-	TerrainGroup->loadAllTerrains(true);
-	TerrainGroup->freeTemporaryResources();
-
-	//else {
-		//Ogre::Image Image;		
-		//Image.load("terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-		//TerrainGroup->defineTerrain(0, 0, &Image);
-	//}
 }
 
 // Shuts the state down
 void _PlayState::Close() {
-	TerrainGroup->saveAllTerrains(true);
 	Game.Scene->destroyAllLights();
-	delete TerrainGroup;
-	delete TerrainGlobalOptions;
 	ObjectManager.Close();
 	Physics.Close();
 }
@@ -301,7 +247,7 @@ void _PlayState::KeyEvent(int Key, bool Pressed) {
 	if(Pressed) {
 		switch(Key) {
 			case OIS::KC_ESCAPE:
-				if(!TerrainGroup->isDerivedDataUpdateInProgress())
+				//if(!TerrainGroup->isDerivedDataUpdateInProgress())
 					Game.Done = true;
 			break;
 			case OIS::KC_F1:
@@ -309,6 +255,12 @@ void _PlayState::KeyEvent(int Key, bool Pressed) {
 			break;
 			case OIS::KC_F2:
 				Game.Camera->setPolygonMode((Ogre::PolygonMode)((int)Ogre::PM_SOLID - (int)Game.Camera->getPolygonMode() + (int)Ogre::PM_WIREFRAME));
+			break;
+			case OIS::KC_F3:
+				if(Camera.Type == _Camera::THIRD_PERSON)
+					Camera.Type = _Camera::FREEMOVE;
+				else if(Camera.Type == _Camera::FREEMOVE && Camera.FollowObject)
+					Camera.Type = _Camera::THIRD_PERSON;
 			break;
 			case OIS::KC_W:
 				Camera.Distance = 10.0f - Camera.Distance;

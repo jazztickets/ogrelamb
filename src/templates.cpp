@@ -89,7 +89,7 @@ void _Templates::Init() {
 	_Template *Template = new _Template;
 	//Template->Material = "grass0";
 	Template->TerrainType = _Template::TERRAIN_BASIC;
-	Template->HeightmapFile = "terrain.png";
+	//Template->HeightmapFile = "terrain.png";
 	Template->ShapeType = _Template::SHAPE_HEIGHTFIELD;
 	Template->Mass = 0.0f;
 	TemplateMap["terrain_ogre"] = Template;

@@ -126,6 +126,9 @@ void _Framework::Init(const std::string &Title) {
 	Mouse->getMouseState().width = Config.Width;
 	Mouse->getMouseState().height = Config.Height;
 
+	// Set up terrain 
+	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
+
 	// Restart timer
 	Timer.reset();
 	Done = false;
@@ -139,6 +142,7 @@ void _Framework::Close() {
 		State->Close();
 
 	// Shutdown Ogre
+	delete TerrainGlobalOptions;
 	OIS::InputManager::destroyInputSystem(InputManager);
 	delete Root;
 }
