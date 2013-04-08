@@ -52,7 +52,7 @@ if(NOT OIS_FOUND)
 endif()
 
 # find boost
-add_definitions(-DBOOST_ALL_NO_LIB)
+add_definitions("-DBOOST_ALL_NO_LIB")
 find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} REQUIRED)
 
 # bullet
