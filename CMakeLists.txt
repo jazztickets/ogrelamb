@@ -66,6 +66,7 @@ include_directories(${OIS_INCLUDE_DIRS})
 include_directories(${BULLET_INCLUDE_DIRS})
 include_directories(${OGRE_Terrain_INCLUDE_DIRS})
 include_directories(${OGRE_Paging_INCLUDE_DIRS})
+include_directories("src")
 #include_directories(${LUA_INCLUDE_DIR})
 
 # add source files
