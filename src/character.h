@@ -15,7 +15,7 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include "stdafx.h"
+#include <all.h>
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
