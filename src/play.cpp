@@ -143,7 +143,7 @@ void _PlayState::Update(float FrameTime) {
 	if(Player && Camera.Type != _Camera::FREEMOVE) {
 
 		if(Player->Character) {
-			float Speed = 0.05f;
+			float Speed = 5.00f * FrameTime;
 			
 			if(Actions.GetState(_Actions::Sprint)) {
 				Speed *= 2;
