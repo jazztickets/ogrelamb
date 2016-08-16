@@ -48,8 +48,8 @@ void _Framework::Init(const std::string &Title) {
 			//Root->loadPlugin("RenderSystem_Direct3D9.dll");
 		#endif
 	#else
-		Root->loadPlugin("/usr/local/lib/OGRE/RenderSystem_GL.so");
-		Root->loadPlugin("/usr/local/lib/OGRE/Plugin_CgProgramManager.so");
+		Root->loadPlugin("/usr/lib/OGRE/RenderSystem_GL.so");
+		Root->loadPlugin("/usr/lib/OGRE/Plugin_CgProgramManager.so");
 	#endif
 
 	// Get renderer
@@ -101,6 +101,7 @@ void _Framework::Init(const std::string &Title) {
 	Camera->lookAt(Ogre::Vector3(0.0f, 0.0f, -1.0f));
 	Camera->setNearClipDistance(0.1f);
 	Camera->setLodBias(1.0f);
+	Camera->setFOVy(Ogre::Radian(Ogre::Degree(75.0f)));
 	if(Root->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE))
 		Camera->setFarClipDistance(0.0f);
 	else
