@@ -166,7 +166,7 @@ void _PlayState::Update(float FrameTime) {
 			Player->Character->Controller->setWalkDirection(Move);
 
 			if(Actions.GetState(_Actions::Jump) && Player->Character->Controller->canJump()) {
-				Player->Character->Controller->jump();
+				Player->Character->Controller->jump(btVector3(0, 10, 0));
 			}
 
 		}

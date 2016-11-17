@@ -120,6 +120,8 @@ void _Framework::Init(const std::string &Title) {
 	// Create input managers
 	OIS::ParamList ParameterList;
 	ParameterList.insert(OIS::ParamList::value_type("WINDOW", Ogre::StringConverter::toString(WindowHandle)));
+	//ParameterList.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+	//ParameterList.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
 	InputManager = OIS::InputManager::createInputSystem(ParameterList);
 	Mouse = static_cast<OIS::Mouse *>(InputManager->createInputObject(OIS::OISMouse, true));
 	Keyboard = static_cast<OIS::Keyboard *>(InputManager->createInputObject(OIS::OISKeyboard, true));

@@ -36,10 +36,11 @@ _Character::_Character(const _Spawn &Spawn, btCollisionShape *Shape) {
 	btTransform World;
 	World.setIdentity();
 	World.setOrigin(Spawn.Position);
+	World.setRotation(btQuaternion(0, btRadians(90), 0));
 	Ghost->setWorldTransform(World);
 
 	// Create character controller
-	Controller = new btKinematicCharacterController(Ghost, (btConvexShape *)Shape, 0.35f);
+	Controller = new btKinematicCharacterController(Ghost, (btConvexShape *)Shape, 0.35f, btVector3(0.0f, 1.0f, 0.0f));
 	Physics.World->addCollisionObject(Ghost, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::StaticFilter | btBroadphaseProxy::DefaultFilter);
 	Physics.World->addAction(Controller);
 }

@@ -40,18 +40,18 @@ _Template::_Template() {
 	AngularDamping = 0.3f;
 
 	// Character
-	int CharacterType = CHARACTER_NONE;
+	CharacterType = CHARACTER_NONE;
 
 	// Vehicle
-	int VehicleType = VEHICLE_NONE;
+	VehicleType = VEHICLE_NONE;
 
 	// Collision
-	int CollisionType = COLLISION_NONE;
+	CollisionType = COLLISION_NONE;
 	CollisionFile = "";
 
 	// Terrain
-	int TerrainType = TERRAIN_NONE;
-	HeightmapFile = "";	
+	TerrainType = TERRAIN_NONE;
+	HeightmapFile = "";
 }
 
 // Default constructor

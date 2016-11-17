@@ -22,6 +22,7 @@
 
 // Template class that describes an object type
 class _Template {
+
 	public:
 
 		enum ShapeType {
