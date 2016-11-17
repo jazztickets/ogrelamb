@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,10 +15,11 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
+
 #include "camera.h"
 #include "object.h"
 #include "framework.h"
+#include <OgreCamera.h>
 
 _Camera Camera;
 
@@ -63,7 +64,7 @@ void _Camera::UpdateRender(float BlendFactor) {
 				Game.Camera->setPosition(NewPosition.x(), NewPosition.y(), NewPosition.z());
 			}
 		} break;
-	}	
+	}
 }
 
 // Movement for free moving cameras
@@ -71,7 +72,7 @@ void _Camera::HandleMove(const btVector3 &Direction, float Speed) {
 	switch(Type) {
 		case FREEMOVE: {
 			if(!Direction.isZero()) {
-		
+
 				btVector3 Move(Direction);
 				Move.normalize();
 				Move *= Speed;
@@ -81,7 +82,7 @@ void _Camera::HandleMove(const btVector3 &Direction, float Speed) {
 			else
 				Velocity.setZero();
 		} break;
-	}	
+	}
 }
 
 // Handle mouse movement
@@ -103,12 +104,12 @@ void _Camera::HandleMouse(int UpdateX, int UpdateY) {
 
 	btVector3 Direction(SinPitch * CosYaw, CosPitch, SinPitch * SinYaw);
 	switch(Type) {
-		case FREEMOVE: {			
+		case FREEMOVE: {
 			Game.Camera->setDirection(Direction.x(), Direction.y(), Direction.z());
 		} break;
-		case THIRD_PERSON: {	
+		case THIRD_PERSON: {
 			Game.Camera->setDirection(Direction.x(), Direction.y(), Direction.z());
 			Offset = Direction * -Distance;
 		} break;
-	}	
+	}
 }

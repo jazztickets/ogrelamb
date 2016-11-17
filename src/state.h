@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,34 +15,30 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef STATE_H
-#define STATE_H
+#pragma once
 
 // Game state class
 class _State {
 
-public:
+	public:
 
-	// Setup
-	virtual void Init() { };
-	virtual void Close() { };
+		// Setup
+		virtual void Init() { };
+		virtual void Close() { };
 
-	// Input
-	virtual void KeyEvent(int Key, bool Pressed) { };
-	virtual void MouseMoved(int UpdateX, int UpdateY) { };
-	virtual void MouseEvent(int Button, bool Pressed) { };
+		// Input
+		virtual void KeyEvent(int Key, bool Pressed) { };
+		virtual void MouseMoved(int UpdateX, int UpdateY) { };
+		virtual void MouseEvent(int Button, bool Pressed) { };
 
-	// Update
-	virtual void Update(float FrameTime) { };
-	virtual void UpdateRender(float TimeStepRemainder, float TimeStep) { };
-	virtual void Draw() { };
+		// Update
+		virtual void Update(float FrameTime) { };
+		virtual void UpdateRender(float TimeStepRemainder, float TimeStep) { };
+		virtual void Draw() { };
 
-	float Time;
-	unsigned long UpdateCount;
+		float Time;
+		unsigned long UpdateCount;
 
-private:
+	private:
 
 };
-
-#endif

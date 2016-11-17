@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,9 +15,8 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef ACTIONS_H
-#define ACTIONS_H
+#pragma once
+#include <list>
 
 // Constants
 const int ACTIONS_MAX = 64;
@@ -27,50 +26,48 @@ const int ACTIONS_MAXBUTTONS = 8;
 // Handles actions
 class _Actions {
 
-public:
-	
-	enum Types {
-		Forward,
-		Back,
-		Left,
-		Right,
-		Jump,
-		Sprint,
-		Ascend,
-		Descend,
-		Fast,
-		Faster,
-		Vehicle_Accel,
-		Vehicle_Reverse,
-		Vehicle_SteerLeft,
-		Vehicle_SteerRight,
-		Vehicle_Brake,
-		Vehicle_Flip,
-		Vehicle_Boost,
-	};
+	public:
 
-	_Actions();
+		enum Types {
+			Forward,
+			Back,
+			Left,
+			Right,
+			Jump,
+			Sprint,
+			Ascend,
+			Descend,
+			Fast,
+			Faster,
+			Vehicle_Accel,
+			Vehicle_Reverse,
+			Vehicle_SteerLeft,
+			Vehicle_SteerRight,
+			Vehicle_Brake,
+			Vehicle_Flip,
+			Vehicle_Boost,
+		};
 
-	// Actions
-	bool GetState(int Action);
+		_Actions();
 
-	// Maps
-	void AddKeyMap(int Key, int Action);
-	void AddMouseMap(int Button, int Action);
+		// Actions
+		bool GetState(int Action);
 
-	// Handlers
-	void KeyEvent(int Key, bool Pressed);
-	void MouseEvent(int Key, bool Pressed);
+		// Maps
+		void AddKeyMap(int Key, int Action);
+		void AddMouseMap(int Button, int Action);
 
-private:
+		// Handlers
+		void KeyEvent(int Key, bool Pressed);
+		void MouseEvent(int Key, bool Pressed);
 
-	std::list<int> KeyMap[ACTIONS_MAXKEYS];
-	std::list<int> MouseMap[ACTIONS_MAXBUTTONS];
-	std::list<int>::iterator MapIterator;
+	private:
 
-	bool State[ACTIONS_MAX];
+		std::list<int> KeyMap[ACTIONS_MAXKEYS];
+		std::list<int> MouseMap[ACTIONS_MAXBUTTONS];
+		std::list<int>::iterator MapIterator;
+
+		bool State[ACTIONS_MAX];
 };
 
 extern _Actions Actions;
-
-#endif

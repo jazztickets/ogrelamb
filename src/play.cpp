@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
+
 #include "play.h"
 #include "framework.h"
 #include "log.h"
@@ -29,6 +29,11 @@
 #include "actions.h"
 #include "templates.h"
 #include "template.h"
+#include <OgreTerrain.h>
+#include <OgreSceneManager.h>
+#include <OgreVector3.h>
+#include <BulletDynamics/Character/btKinematicCharacterController.h>
+#include <BulletDynamics/Vehicle/btRaycastVehicle.h>
 
 _PlayState PlayState;
 static Ogre::Light *Light = NULL;
@@ -57,7 +62,7 @@ void _PlayState::Init() {
 	Actions.AddMouseMap(OIS::MB_Left, _Actions::Vehicle_Boost);
 	Actions.AddMouseMap(OIS::MB_Left, _Actions::Fast);
 	Actions.AddMouseMap(OIS::MB_Right, _Actions::Faster);
-	
+
 	Physics.Init();
 	ObjectManager.Init();
 	Camera.SetPosition(btVector3(0, 2, 5));
@@ -122,11 +127,11 @@ void _PlayState::Update(float FrameTime) {
 	float CameraSpeed = 0.1f;
 	btVector3 Move(0, 0, 0);
 	if(Actions.GetState(_Actions::Forward))
-		Move[2] += -1; 
+		Move[2] += -1;
 	if(Actions.GetState(_Actions::Back))
 		Move[2] += 1;
 	if(Actions.GetState(_Actions::Left))
-		Move[0] += -1; 
+		Move[0] += -1;
 	if(Actions.GetState(_Actions::Right))
 		Move[0] += 1;
 	if(Actions.GetState(_Actions::Ascend))
@@ -137,14 +142,14 @@ void _PlayState::Update(float FrameTime) {
 		CameraSpeed *= 10.0f;
 	if(Actions.GetState(_Actions::Faster))
 		CameraSpeed *= 10.0f;
-	
+
 	Camera.HandleMove(Move, CameraSpeed);
-	
+
 	if(Player && Camera.Type != _Camera::FREEMOVE) {
 
 		if(Player->Character) {
 			float Speed = 5.00f * FrameTime;
-			
+
 			if(Actions.GetState(_Actions::Sprint)) {
 				Speed *= 2;
 			}
@@ -155,7 +160,7 @@ void _PlayState::Update(float FrameTime) {
 			btTransform CameraDirection;
 			CameraDirection.setIdentity();
 			CameraDirection.setRotation(btQuaternion(-Camera.Yaw, 0, 0));
-			
+
 			Move = CameraDirection * Move;
 			Move *= Speed;
 			Player->Character->Controller->setWalkDirection(Move);
@@ -216,7 +221,7 @@ void _PlayState::Update(float FrameTime) {
 			}
 		}
 	}
-	
+
 	ObjectManager.Update(FrameTime);
 	Physics.Update(FrameTime);
 	Camera.Update(FrameTime);

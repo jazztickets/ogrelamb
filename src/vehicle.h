@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,12 +15,17 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef VEHICLE_H
-#define VEHICLE_H
+#pragma once
 
 // Forward Declarations
 class _Spawn;
+class btCollisionObject;
+class btRaycastVehicle;
+class btDefaultVehicleRaycaster;
+namespace Ogre {
+	class SceneNode;
+	class Entity;
+}
 
 // Vehicle
 class _Vehicle {
@@ -45,5 +50,3 @@ private:
 
 	btDefaultVehicleRaycaster *VehicleRayCaster;
 };
-
-#endif

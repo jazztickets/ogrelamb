@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,11 +15,16 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
+
 #include "framework.h"
 #include "config.h"
 #include "log.h"
 #include "state.h"
+#include <OgreRoot.h>
+#include <OgreRenderWindow.h>
+#include <OgreTerrain.h>
+#include <OgreWindowEventUtilities.h>
+#include <OISInputManager.h>
 
 // Global instance
 _Framework Game;
@@ -32,7 +37,7 @@ void _Framework::Init(const std::string &Title) {
 	FrameNumber = 0;
 	State = RequestedState = NULL;
 	TimeStep = Config.TimeStep;
-	
+
 	// Create the ogre root
 	Root = new Ogre::Root();
 
@@ -93,7 +98,7 @@ void _Framework::Init(const std::string &Title) {
 	Scene->setAmbientLight(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
 	//Scene->setAmbientLight(Ogre::ColourValue(1.0f, 1.0f, 1.0f));
 	//Scene->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-	Scene->setShadowTechnique(Ogre::SHADOWTYPE_NONE);	
+	Scene->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
 
 	// Create camera
 	Camera = Scene->createCamera("main");
@@ -127,7 +132,7 @@ void _Framework::Init(const std::string &Title) {
 	Mouse->getMouseState().width = Config.Width;
 	Mouse->getMouseState().height = Config.Height;
 
-	// Set up terrain 
+	// Set up terrain
 	TerrainGlobalOptions = new Ogre::TerrainGlobalOptions();
 
 	// Restart timer
@@ -137,7 +142,7 @@ void _Framework::Init(const std::string &Title) {
 
 // Shutdown
 void _Framework::Close() {
-	
+
 	// Close the current state
 	if(State)
 		State->Close();
@@ -161,7 +166,7 @@ void _Framework::Update() {
 	float ExtraTime = TimeStep - FrameTime;
 	if(ExtraTime > 0.0f)
 		Delay(ExtraTime);
-				
+
 	// Read input
 	Ogre::WindowEventUtilities::messagePump();
 	Mouse->capture();
@@ -195,7 +200,7 @@ void _Framework::Update() {
 
 // Change states
 void _Framework::ChangeState(_State *RequestedState) {
-	
+
 	if(State)
 		State->Close();
 

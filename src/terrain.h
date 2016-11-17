@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,30 +15,30 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef TERRAIN_H
-#define TERRAIN_H
+#pragma once
+#include <stdint.h>
 
 // Forward Declarations
 class _Spawn;
+namespace Ogre {
+	class TerrainGroup;
+}
 
 // Terrain
 class _Terrain {
 
-public:
+	public:
 
-	_Terrain(const _Spawn &Spawn);
-	~_Terrain();
+		_Terrain(const _Spawn &Spawn);
+		~_Terrain();
 
-	Ogre::uint16 Size;
-	float *BulletHeight;
-	Ogre::TerrainGroup *TerrainGroup;
+		uint16_t Size;
+		float *BulletHeight;
+		Ogre::TerrainGroup *TerrainGroup;
 
-private:
+	private:
 
-	void CreateProceduralHeight(int SlotX, int SlotY, int Size, float *Data);
-	void CreateBulletHeightData(const float *Data);
+		void CreateProceduralHeight(int SlotX, int SlotY, int Size, float *Data);
+		void CreateBulletHeightData(const float *Data);
 
 };
-
-#endif

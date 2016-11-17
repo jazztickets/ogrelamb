@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
+
 #include "object.h"
 #include "template.h"
 #include "framework.h"
@@ -24,6 +24,18 @@
 #include "vehicle.h"
 #include "collision.h"
 #include "terrain.h"
+#include <OgreSceneManager.h>
+#include <OgreEntity.h>
+#include <BulletCollision/CollisionShapes/btCompoundShape.h>
+#include <BulletCollision/CollisionShapes/btBoxShape.h>
+#include <BulletCollision/CollisionShapes/btSphereShape.h>
+#include <BulletCollision/CollisionShapes/btCylinderShape.h>
+#include <BulletCollision/CollisionShapes/btCapsuleShape.h>
+#include <BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h>
+#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#include <BulletCollision/CollisionDispatch/btGhostObject.h>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
+#include <BulletDynamics/Vehicle/btRaycastVehicle.h>
 
 // Constructor
 _Object::_Object(const _Spawn &Spawn) {
@@ -208,7 +220,7 @@ void _Object::getWorldTransform(btTransform &Transform) const {
 // Set the center of mass transform for the object
 void _Object::setWorldTransform(const btTransform &Transform) {
 	CenterOfMassTransform = Transform;
-	
+
 	// Get the graphics transform
 	GraphicsTransform = CenterOfMassTransform * ChildShapeOffset;
 

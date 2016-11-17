@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,9 +15,8 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef COLLISION_H
-#define COLLISION_H
+#pragma once
+#include <BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h>
 
 // Forward Declarations
 class _Spawn;
@@ -25,17 +24,15 @@ class _Spawn;
 // Static collision mesh for bullet
 class _Collision {
 
-public:
+	public:
 
-	_Collision(const _Spawn &Spawn);
-	~_Collision();
+		_Collision(const _Spawn &Spawn);
+		~_Collision();
 
-	btTriangleIndexVertexArray *TriangleIndexVertexArray;
-	float *VertexList;
-	int *FaceList;
+		btTriangleIndexVertexArray *TriangleIndexVertexArray;
+		float *VertexList;
+		int *FaceList;
 
-private:
+	private:
 
 };
-
-#endif

@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,9 +15,7 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef PLAY_H
-#define PLAY_H
+#pragma once
 
 // Libraries
 #include "state.h"
@@ -28,25 +26,24 @@ class _Object;
 // Main game state
 class _PlayState : public _State {
 
-public:
+	public:
 
-	void Init();
-	void Close();
+		void Init();
+		void Close();
 
-	void KeyEvent(int Key, bool Pressed);
-	void MouseMoved(int UpdateX, int UpdateY);
-	void MouseEvent(int Button, bool Pressed);
+		void KeyEvent(int Key, bool Pressed);
+		void MouseMoved(int UpdateX, int UpdateY);
+		void MouseEvent(int Button, bool Pressed);
 
-	void Update(float FrameTime);
-	void UpdateRender(float TimeStepRemainder, float TimeStep);
-	void Draw();
+		void Update(float FrameTime);
+		void UpdateRender(float TimeStepRemainder, float TimeStep);
+		void Draw();
 
-private:
+	private:
 
-	_Object *Player, *Car, *Character;
+		_Object *Player, *Car, *Character;
 
 };
 
 extern _PlayState PlayState;
 
-#endif

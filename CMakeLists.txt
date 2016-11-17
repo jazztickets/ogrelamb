@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
 
-# extra modules
-include(AddPCH.cmake)
-
 # project name
 project(ogrelamb)
 subdirs(tools)
@@ -10,14 +7,14 @@ subdirs(tools)
 # set up ogre cmake module path based on OS
 if(MSVC)
 	add_definitions("/D_CRT_SECURE_NO_WARNINGS /wd4251 /wd4275" )
-	
+
 	set(CMAKE_MODULE_PATH "$ENV{OGRE_HOME}/CMake/;${CMAKE_MODULE_PATH}")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
-	
+
 	set(Boost_USE_STATIC_LIBS TRUE)
-	set(BOOST_ROOT "$ENV{OGRE_HOME}/boost/")	
+	set(BOOST_ROOT "$ENV{OGRE_HOME}/boost/")
 	set(OGRE_BOOST_COMPONENTS thread date_time)
-	
+
 	set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/)
 elseif(UNIX)
 	#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -H")
@@ -35,7 +32,7 @@ elseif(UNIX)
 		message(SEND_ERROR "Failed to find module path.")
 	endif()
 	set(OGRE_BOOST_COMPONENTS thread date_time system)
-	
+
 	set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE})
 endif()
 
@@ -76,7 +73,6 @@ source_group(main FILES ${MAIN_FILES})
 
 # add binary
 add_executable(${CMAKE_PROJECT_NAME} ${MAIN_FILES})
-add_pch(${CMAKE_PROJECT_NAME} src/all.cpp ${PROJECT_SOURCE_DIR}/src/all.h)
 
 # link libraries
 target_link_libraries(${CMAKE_PROJECT_NAME} ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${OIS_LIBRARIES} ${Boost_LIBRARIES} ${BULLET_LIBRARIES})

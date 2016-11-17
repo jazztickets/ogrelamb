@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,9 +15,8 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef CAMERA_H
-#define CAMERA_H
+#pragma once
+#include <LinearMath/btVector3.h>
 
 // Forward Declarations
 class _Object;
@@ -25,37 +24,35 @@ class _Object;
 // Camera class
 class _Camera {
 
-public:
+	public:
 
-	enum CameraType {
-		FREEMOVE,
-		THIRD_PERSON
-	};
+		enum CameraType {
+			FREEMOVE,
+			THIRD_PERSON
+		};
 
-	_Camera();
+		_Camera();
 
-	// Update
-	void Update(float FrameTime);
-	void UpdateRender(float BlendFactor);
-	void HandleMove(const btVector3 &Direction, float Speed);
-	void HandleMouse(int UpdateX, int UpdateY);
+		// Update
+		void Update(float FrameTime);
+		void UpdateRender(float BlendFactor);
+		void HandleMove(const btVector3 &Direction, float Speed);
+		void HandleMouse(int UpdateX, int UpdateY);
 
-	void SetPosition(const btVector3 &Position) { LastPosition = this->Position = Position; }
+		void SetPosition(const btVector3 &Position) { LastPosition = this->Position = Position; }
 
-	int Type;
-	_Object *FollowObject;
-	float Sensitivity[2];
-	float Distance;
-	float Yaw, Pitch;
-	float PitchLimit;
+		int Type;
+		_Object *FollowObject;
+		float Sensitivity[2];
+		float Distance;
+		float Yaw, Pitch;
+		float PitchLimit;
 
-private:
+	private:
 
-	// State
-	btVector3 Position, LastPosition, Velocity, Offset;
-	
+		// State
+		btVector3 Position, LastPosition, Velocity, Offset;
+
 };
 
 extern _Camera Camera;
-
-#endif

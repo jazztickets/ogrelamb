@@ -6,9 +6,4 @@ build
 *.dll
 *.blend1
 *.blend2
-codelite/debug
-codelite/release
-codelite/*.mk
-codelite/*.tags
-codelite/*.db
-codelite/ogrelamb.workspace.*
+CMakeLists.txt.user

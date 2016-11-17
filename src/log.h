@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,45 +15,44 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef LOG_H
-#define LOG_H
+#pragma once
+
+#include <iostream>
+#include <fstream>
 
 // Log file class
 class _Log {
 
-public:
+	public:
 
-	_Log() { }
-	~_Log() { File.close();	}
+		_Log() { }
+		~_Log() { File.close();	}
 
-	// Open log file
-	void Open(const char *Filename) {
-		File.open(Filename);
-	}
+		// Open log file
+		void Open(const char *Filename) {
+			File.open(Filename);
+		}
 
-	// Handles most types
-	template <typename Type>
-	_Log &operator<<(const Type &Value) {
-		std::clog << Value;
-		File << Value;
+		// Handles most types
+		template <typename Type>
+		_Log &operator<<(const Type &Value) {
+			std::clog << Value;
+			File << Value;
 
-		return *this;
-	}
+			return *this;
+		}
 
-	// Handles endl
-	_Log &operator<<(std::ostream &(*Value)(std::ostream &)) {
-		std::clog << Value;
-		File << Value;
+		// Handles endl
+		_Log &operator<<(std::ostream &(*Value)(std::ostream &)) {
+			std::clog << Value;
+			File << Value;
 
-		return *this;
-	}
+			return *this;
+		}
 
-private:
-                
-	std::ofstream File;
+	private:
+
+		std::ofstream File;
 };
 
 extern _Log Log;
-
-#endif

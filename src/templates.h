@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,9 +15,8 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef TEMPLATES_H
-#define TEMPLATES_H
+#pragma once
+#include <map>
 
 // Forward Declarations
 class _Template;
@@ -28,19 +27,18 @@ typedef std::map<std::string, const _Template *> _TemplateMapType;
 // Manages templates
 class _Templates {
 
-public:
+	public:
 
-	void Init();
-	void Close();
-	void Clear();
+		void Init();
+		void Close();
+		void Clear();
 
-	const _Template *operator[](const std::string &Name);
+		const _Template *operator[](const std::string &Name);
 
-private:
+	private:
 
-	_TemplateMapType TemplateMap;
+		_TemplateMapType TemplateMap;
 };
 
 extern _Templates Templates;
 
-#endif

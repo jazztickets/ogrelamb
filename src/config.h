@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,50 +15,49 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef CONFIG_H
-#define CONFIG_H
+#pragma once
+#include <string>
+#include <sstream>
+#include <map>
 
 // Load/save config file
 class _Config {
 
-public:
+	public:
 
-	void Init(const std::string &ConfigFile);
-	void Close();
+		void Init(const std::string &ConfigFile);
+		void Close();
 
-	void Load();
-	void Save();
-	void SetDefaults();
+		void Load();
+		void Save();
+		void SetDefaults();
 
-	// Graphics
-	int Width, Height;
-	int FSAA;
-	int Aniso;
-	bool Fullscreen;
-	bool Vsync;
+		// Graphics
+		int Width, Height;
+		int FSAA;
+		int Aniso;
+		bool Fullscreen;
+		bool Vsync;
 
-	// Game
-	float TimeStep;
-	float MouseX, MouseY;
+		// Game
+		float TimeStep;
+		float MouseX, MouseY;
 
-private:
+	private:
 
-	template <typename Type>
-	void GetValue(const std::string &Field, Type &Value) {
-		MapIterator = Map.find(Field);
-		if(MapIterator != Map.end()) {
-			std::stringstream Stream(MapIterator->second);
-			Stream >> Value;
+		template <typename Type>
+		void GetValue(const std::string &Field, Type &Value) {
+			MapIterator = Map.find(Field);
+			if(MapIterator != Map.end()) {
+				std::stringstream Stream(MapIterator->second);
+				Stream >> Value;
+			}
 		}
-	}
 
-	// State
-	std::string ConfigFile;
-	std::map<std::string, std::string> Map;
-	std::map<std::string, std::string>::iterator MapIterator;
+		// State
+		std::string ConfigFile;
+		std::map<std::string, std::string> Map;
+		std::map<std::string, std::string>::iterator MapIterator;
 };
 
 extern _Config Config;
-
-#endif

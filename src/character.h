@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,29 +15,28 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#pragma once
 
 // Forward Declarations
 class _Spawn;
+class btCollisionShape;
+class btKinematicCharacterController;
+class btPairCachingGhostObject;
 
 // Character controller
 class _Character {
 
-public:
+	public:
 
-	_Character(const _Spawn &Spawn, btCollisionShape *Shape);
-	~_Character();
+		_Character(const _Spawn &Spawn, btCollisionShape *Shape);
+		~_Character();
 
-	void Update(float FrameTime);
+		void Update(float FrameTime);
 
-	// Objects
-	btKinematicCharacterController *Controller;
-	btPairCachingGhostObject *Ghost;
-	
-private:
+		// Objects
+		btKinematicCharacterController *Controller;
+		btPairCachingGhostObject *Ghost;
+
+	private:
 
 };
-
-#endif

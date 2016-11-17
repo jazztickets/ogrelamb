@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,86 +15,85 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef TEMPLATE_H
-#define TEMPLATE_H
+#pragma once
+#include <string>
+#include <LinearMath/btVector3.h>
+#include <LinearMath/btQuaternion.h>
 
 // Template class that describes an object type
 class _Template {
-public:
+	public:
 
-	enum ShapeType {
-		SHAPE_NONE,
-		SHAPE_BOX,
-		SHAPE_SPHERE,
-		SHAPE_CYLINDER,
-		SHAPE_CAPSULE,
-		SHAPE_COMPOUND,
-		SHAPE_TRIANGLEMESH,
-		SHAPE_HEIGHTFIELD,
-	};
+		enum ShapeType {
+			SHAPE_NONE,
+			SHAPE_BOX,
+			SHAPE_SPHERE,
+			SHAPE_CYLINDER,
+			SHAPE_CAPSULE,
+			SHAPE_COMPOUND,
+			SHAPE_TRIANGLEMESH,
+			SHAPE_HEIGHTFIELD,
+		};
 
-	enum CharacterType {
-		CHARACTER_NONE,
-		CHARACTER_BASIC
-	};
+		enum CharacterType {
+			CHARACTER_NONE,
+			CHARACTER_BASIC
+		};
 
-	enum VehicleType {
-		VEHICLE_NONE,
-		VEHICLE_BASIC
-	};
+		enum VehicleType {
+			VEHICLE_NONE,
+			VEHICLE_BASIC
+		};
 
-	enum CollisionType {
-		COLLISION_NONE,
-		COLLISION_STATICMESH,
-	};
+		enum CollisionType {
+			COLLISION_NONE,
+			COLLISION_STATICMESH,
+		};
 
-	enum TerrainType {
-		TERRAIN_NONE,
-		TERRAIN_BASIC,
-	};
+		enum TerrainType {
+			TERRAIN_NONE,
+			TERRAIN_BASIC,
+		};
 
-	_Template();
+		_Template();
 
-	// Graphics
-	std::string MeshFile, Material;
-	btVector3 Scale;
-	
-	// Physics
-	int ShapeType;
-	btVector3 Shape;
-	btVector3 MassOffset;
-	float Radius;
-	float Mass, Friction, Restitution;
-	float LinearDamping, AngularDamping;
+		// Graphics
+		std::string MeshFile, Material;
+		btVector3 Scale;
 
-	// Character
-	int CharacterType;
+		// Physics
+		int ShapeType;
+		btVector3 Shape;
+		btVector3 MassOffset;
+		float Radius;
+		float Mass, Friction, Restitution;
+		float LinearDamping, AngularDamping;
 
-	// Vehicle
-	int VehicleType;
+		// Character
+		int CharacterType;
 
-	// Collision
-	int CollisionType;
-	std::string CollisionFile;
+		// Vehicle
+		int VehicleType;
 
-	// Terrain
-	int TerrainType;
-	std::string HeightmapFile;
+		// Collision
+		int CollisionType;
+		std::string CollisionFile;
+
+		// Terrain
+		int TerrainType;
+		std::string HeightmapFile;
 
 };
 
 // Spawn class that describes object instances
 class _Spawn {
-public:
+	public:
 
-	_Spawn();
-	_Spawn(const _Template *Template, const std::string &Name, const btVector3 &Position=btVector3(0, 0, 0), const btQuaternion &Rotation=btQuaternion(0, 0, 0));
+		_Spawn();
+		_Spawn(const _Template *Template, const std::string &Name, const btVector3 &Position=btVector3(0, 0, 0), const btQuaternion &Rotation=btQuaternion(0, 0, 0));
 
-	std::string Name;
-	btVector3 Position;
-	btQuaternion Rotation;
-	const _Template *Template;
+		std::string Name;
+		btVector3 Position;
+		btQuaternion Rotation;
+		const _Template *Template;
 };
-
-#endif

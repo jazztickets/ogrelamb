@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,11 +15,14 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
+
 #include "vehicle.h"
 #include "template.h"
 #include "framework.h"
 #include "physics.h"
+#include <OgreSceneManager.h>
+#include <OgreEntity.h>
+#include <BulletDynamics/Vehicle/btRaycastVehicle.h>
 
 // Vehicle constructor
 _Vehicle::_Vehicle(const _Spawn &Spawn, btCollisionObject *Chassis) {
@@ -80,7 +83,7 @@ void _Vehicle::Update(float FrameTime) {
 		Steering /= ReleaseRate;
 	}
 	btClamp<float>(Steering, -SteeringLimit, SteeringLimit);
-	
+
 	RaycastVehicle->setSteeringValue(Steering, 0);
 	RaycastVehicle->setSteeringValue(Steering, 1);
 }

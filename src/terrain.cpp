@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,12 +15,14 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
+
 #include "terrain.h"
 #include "template.h"
 #include "framework.h"
 #include "physics.h"
 #include "log.h"
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
 
 // Constructor
 _Terrain::_Terrain(const _Spawn &Spawn) {
@@ -64,7 +66,7 @@ void _Terrain::CreateBulletHeightData(const float *Data) {
 		return;
 
 	BulletHeight = new float[Size * Size];
-	for(Ogre::uint16 i = 0; i < Size; i++) {
+	for(uint16_t i = 0; i < Size; i++) {
 		memcpy(BulletHeight + Size * i, Data + (Size - i - 1) * Size, sizeof(float) * Size);
 	}
 }

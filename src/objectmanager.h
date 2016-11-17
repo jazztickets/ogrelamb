@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,9 +15,8 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef OBJECTMANAGER_H
-#define OBJECTMANAGER_H
+#pragma once
+#include <list>
 
 // Forward Declarations
 class _Object;
@@ -26,26 +25,25 @@ class _Spawn;
 // Manages all the objects
 class _ObjectManager {
 
-public:
+	public:
 
-	void Init();
-	void Close();
+		void Init();
+		void Close();
 
-	// Updates
-	void Update(float FrameTime);
-	void Draw();
+		// Updates
+		void Update(float FrameTime);
+		void Draw();
 
-	// Management
-	void AddObject(_Object *Object);
-	_Object *CreateObject(const _Spawn &Spawn);
-	void ClearObjects();
+		// Management
+		void AddObject(_Object *Object);
+		_Object *CreateObject(const _Spawn &Spawn);
+		void ClearObjects();
 
-private:
-				
-	// Objects
-	std::list<_Object *> Objects;
+	private:
+
+		// Objects
+		std::list<_Object *> Objects;
 };
 
 extern _ObjectManager ObjectManager;
 
-#endif

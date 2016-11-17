@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,11 +15,14 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
+
 #include "character.h"
 #include "template.h"
 #include "framework.h"
 #include "physics.h"
+#include <BulletCollision/CollisionDispatch/btGhostObject.h>
+#include <BulletCollision/CollisionShapes/btCollisionShape.h>
+#include <BulletDynamics/Character/btKinematicCharacterController.h>
 
 // Character constructor
 _Character::_Character(const _Spawn &Spawn, btCollisionShape *Shape) {
@@ -28,13 +31,13 @@ _Character::_Character(const _Spawn &Spawn, btCollisionShape *Shape) {
 	Ghost = new btPairCachingGhostObject();
 	Ghost->setCollisionShape(Shape);
 	Ghost->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
-	
+
 	// TODO cleanup
 	btTransform World;
 	World.setIdentity();
 	World.setOrigin(Spawn.Position);
 	Ghost->setWorldTransform(World);
-	
+
 	// Create character controller
 	Controller = new btKinematicCharacterController(Ghost, (btConvexShape *)Shape, 0.35f);
 	Physics.World->addCollisionObject(Ghost, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::StaticFilter | btBroadphaseProxy::DefaultFilter);

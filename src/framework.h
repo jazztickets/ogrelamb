@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,68 +15,76 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
-#ifndef FRAMEWORK_H
-#define FRAMEWORK_H
+#pragma once
+#include <OISKeyboard.h>
+#include <OISMouse.h>
+#include <OgreTimer.h>
 
 // Forward Declarations
 class _State;
 
+namespace Ogre {
+	class Root;
+	class SceneManager;
+	class RenderWindow;
+	class Camera;
+	class TerrainGlobalOptions;
+
+}
+
 // Manages Ogre3D and input systems
 class _Framework : public OIS::KeyListener, public OIS::MouseListener {
 
-public:
+	public:
 
-	// Setup
-	void Init(const std::string &Title);
-	void Close();
+		// Setup
+		void Init(const std::string &Title);
+		void Close();
 
-	// Update functions
-	void ChangeState(_State *RequestedState);
-	void Update();
-	void Render();
+		// Update functions
+		void ChangeState(_State *RequestedState);
+		void Update();
+		void Render();
 
-	// Input callbacks
-	bool keyPressed(const OIS::KeyEvent &Event);
-	bool keyReleased(const OIS::KeyEvent &Event);
-	bool mouseMoved(const OIS::MouseEvent &Event);
-	bool mousePressed(const OIS::MouseEvent &Event, OIS::MouseButtonID Button);
-	bool mouseReleased(const OIS::MouseEvent &Event, OIS::MouseButtonID Button);
+		// Input callbacks
+		bool keyPressed(const OIS::KeyEvent &Event);
+		bool keyReleased(const OIS::KeyEvent &Event);
+		bool mouseMoved(const OIS::MouseEvent &Event);
+		bool mousePressed(const OIS::MouseEvent &Event, OIS::MouseButtonID Button);
+		bool mouseReleased(const OIS::MouseEvent &Event, OIS::MouseButtonID Button);
 
-	// Graphics
-	Ogre::Root *Root;
-	Ogre::SceneManager *Scene;
-	Ogre::RenderWindow *Window;
-	Ogre::Camera *Camera;
-	Ogre::ulong WindowHandle;
-	Ogre::TerrainGlobalOptions *TerrainGlobalOptions;
+		// Graphics
+		Ogre::Root *Root;
+		Ogre::SceneManager *Scene;
+		Ogre::RenderWindow *Window;
+		Ogre::Camera *Camera;
+		Ogre::ulong WindowHandle;
+		Ogre::TerrainGlobalOptions *TerrainGlobalOptions;
 
-	// Input
-	OIS::InputManager *InputManager;
-	OIS::Mouse *Mouse;
-	OIS::Keyboard *Keyboard;
+		// Input
+		OIS::InputManager *InputManager;
+		OIS::Mouse *Mouse;
+		OIS::Keyboard *Keyboard;
 
-	// State
-	bool Done;
-	float TimeStep;
-	Ogre::ulong FrameNumber;
-	
-private:
+		// State
+		bool Done;
+		float TimeStep;
+		Ogre::ulong FrameNumber;
 
-	void Delay(float Time);
+	private:
 
-	// States
-	_State *State, *RequestedState;
+		void Delay(float Time);
 
-	// Time
-	Ogre::Timer Timer;
-	Ogre::uint TimeStamp;
+		// States
+		_State *State, *RequestedState;
 
-	// Physics
-	float TimeStepAccumulator;
+		// Time
+		Ogre::Timer Timer;
+		Ogre::uint TimeStamp;
+
+		// Physics
+		float TimeStepAccumulator;
 
 };
 
 extern _Framework Game;
-
-#endif

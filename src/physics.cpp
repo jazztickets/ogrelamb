@@ -1,6 +1,6 @@
 /*************************************************************************************
-*	ogrelamb - http://ogrelamb.googlecode.com
-*	Copyright (C) 2012  Alan Witkowski
+*	ogrelamb - https://github.com/jazztickets/ogrelamb
+*	Copyright (C) 2016  Alan Witkowski
 *
 *	This program is free software: you can redistribute it and/or modify
 *	it under the terms of the GNU General Public License as published by
@@ -15,9 +15,13 @@
 *	You should have received a copy of the GNU General Public License
 *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************************/
-#include <all.h>
+
 #include "physics.h"
 #include "object.h"
+#include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
+#include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
+#include <BulletCollision/CollisionDispatch/btGhostObject.h>
+#include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
 
 _Physics Physics;
 
@@ -66,7 +70,7 @@ void _Physics::Update(float FrameTime) {
 		if(ContactManifold->getNumContacts() > 0) {
 			const btCollisionObject *CollisionObject0 = static_cast<const btCollisionObject *>(ContactManifold->getBody0());
 			const btCollisionObject *CollisionObject1 = static_cast<const btCollisionObject *>(ContactManifold->getBody1());
-				
+
 			//ObjectClass *Object0 = static_cast<ObjectClass *>(CollisionObject0->getUserPointer());
 			//ObjectClass *Object1 = static_cast<ObjectClass *>(CollisionObject1->getUserPointer());
 
