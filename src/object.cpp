@@ -26,6 +26,7 @@
 #include "terrain.h"
 #include <OgreSceneManager.h>
 #include <OgreEntity.h>
+#include <OgreSceneNode.h>
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
 #include <BulletCollision/CollisionShapes/btSphereShape.h>

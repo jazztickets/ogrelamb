@@ -29,6 +29,7 @@
 #include "actions.h"
 #include "templates.h"
 #include "template.h"
+#include <OgreCamera.h>
 #include <OgreTerrain.h>
 #include <OgreSceneManager.h>
 #include <OgreVector3.h>

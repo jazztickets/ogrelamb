@@ -22,6 +22,7 @@
 #include "physics.h"
 #include <OgreSceneManager.h>
 #include <OgreEntity.h>
+#include <OgreSceneNode.h>
 #include <BulletDynamics/Vehicle/btRaycastVehicle.h>
 
 // Vehicle constructor

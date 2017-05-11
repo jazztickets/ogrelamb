@@ -24,6 +24,10 @@
 #include <OgreRenderWindow.h>
 #include <OgreTerrain.h>
 #include <OgreWindowEventUtilities.h>
+#include <OgreCamera.h>
+#include <OgreViewport.h>
+#include <OgreMaterialManager.h>
+#include <OgreLogManager.h>
 #include <OISInputManager.h>
 
 // Global instance

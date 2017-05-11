@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 2.8)
 project(ogrelamb)
 subdirs(tools)
 
+# add extra find modules
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
+
 # set up ogre cmake module path based on OS
 if(MSVC)
 	add_definitions("/D_CRT_SECURE_NO_WARNINGS /wd4251 /wd4275" )

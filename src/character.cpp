@@ -41,6 +41,7 @@ _Character::_Character(const _Spawn &Spawn, btCollisionShape *Shape) {
 
 	// Create character controller
 	Controller = new btKinematicCharacterController(Ghost, (btConvexShape *)Shape, 0.35f, btVector3(0.0f, 1.0f, 0.0f));
+	Controller->setGravity(btVector3(0.0f, -10.0f, 0.0f));
 	Physics.World->addCollisionObject(Ghost, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::StaticFilter | btBroadphaseProxy::DefaultFilter);
 	Physics.World->addAction(Controller);
 }
