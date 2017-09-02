@@ -27,7 +27,7 @@ void _Config::Init(const std::string &ConfigFile) {
 
 	// Load defaults
 	SetDefaults();
-	
+
 	// Load config
 	Load();
 }
@@ -40,21 +40,21 @@ void _Config::Close() {
 // Set defaults
 void _Config::SetDefaults() {
 
-	Width = 800;
-	Height = 600;
+	Width = 1024;
+	Height = 768;
 	FSAA = 0;
 	Aniso = 0;
 	Fullscreen = false;
 	Vsync = false;
 
 	TimeStep = 0.01f;
-	MouseX = 0.4f;
-	MouseY = -0.4f;
+	MouseX = 0.1f;
+	MouseY = -0.1f;
 }
 
 // Load the config file
 void _Config::Load() {
-	
+
 	// Open file
 	std::ifstream In(ConfigFile.c_str());
 	if(!In.is_open()) {

@@ -59,7 +59,7 @@ int _Database::OpenDatabase(const char *Filename, bool Create) {
 
 // Runs a query 
 int _Database::RunQuery(const char *QueryString) {
-	
+
 	sqlite3_stmt *NewQueryHandle;
 	const char *Tail;
 	int Result = sqlite3_prepare_v2(Database, QueryString, strlen(QueryString), &NewQueryHandle, &Tail);
@@ -127,7 +127,7 @@ int _Database::FetchRow(int Handle) {
 
 // Closes a query
 int _Database::CloseQuery(int Handle) {
-	
+
 	int Result = sqlite3_finalize(QueryHandle[Handle]);
 	if(Result != SQLITE_OK) {
 		Log << __FUNCTION__ << " -- " << sqlite3_errmsg(Database);
@@ -139,7 +139,7 @@ int _Database::CloseQuery(int Handle) {
 
 // Gets the last insert id
 sqlite3_int64 _Database::GetLastInsertID() {
-	
+
 	return sqlite3_last_insert_rowid(Database);
 }
 

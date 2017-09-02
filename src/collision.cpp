@@ -24,7 +24,7 @@
 
 // Load a .col file
 _Collision::_Collision(const _Spawn &Spawn) {
-	
+
 	// Open file
 	std::string FilePath(std::string("collision/") + Spawn.Template->CollisionFile);
 	std::ifstream File(FilePath.c_str(), std::ios::binary);
@@ -51,7 +51,7 @@ _Collision::_Collision(const _Spawn &Spawn) {
 
 	// Read faces
 	File.read((char *)FaceList, FaceDataSize * sizeof(int));
-	
+
 	// Create vertex array object
 	TriangleIndexVertexArray = new btTriangleIndexVertexArray(FaceCount, FaceList, 3 * sizeof(int), VertDataSize, VertexList, 3 * sizeof(float));
 
