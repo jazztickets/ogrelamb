@@ -28,7 +28,7 @@
 #include <OgreViewport.h>
 #include <OgreMaterialManager.h>
 #include <OgreLogManager.h>
-#include <OISInputManager.h>
+#include <ois/OISInputManager.h>
 
 // Global instance
 _Framework Game;
@@ -58,6 +58,7 @@ void _Framework::Init(const std::string &Title) {
 		#endif
 	#else
 		Root->loadPlugin("/usr/lib/OGRE/RenderSystem_GL.so");
+		Root->loadPlugin("/usr/lib/OGRE/Codec_STBI.so");
 		Root->loadPlugin("/usr/lib/OGRE/Plugin_CgProgramManager.so");
 	#endif
 
@@ -98,7 +99,7 @@ void _Framework::Init(const std::string &Title) {
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 	// Create scene manager
-	Scene = Root->createSceneManager(Ogre::ST_GENERIC);
+	Scene = Root->createSceneManager();
 	Scene->setAmbientLight(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
 	//Scene->setAmbientLight(Ogre::ColourValue(1.0f, 1.0f, 1.0f));
 	//Scene->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);

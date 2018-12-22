@@ -56,12 +56,12 @@ void _Camera::UpdateRender(float BlendFactor) {
 	switch(Type) {
 		case FREEMOVE: {
 			btVector3 InterpolatedPosition = Position * BlendFactor + LastPosition * (1.0f - BlendFactor);
-			Game.Camera->setPosition(InterpolatedPosition.x(), InterpolatedPosition.y(), InterpolatedPosition.z());
+			Game.Camera->setPosition(Ogre::Vector3(InterpolatedPosition.x(), InterpolatedPosition.y(), InterpolatedPosition.z()));
 		} break;
 		case THIRD_PERSON: {
 			if(FollowObject) {
 				btVector3 NewPosition = FollowObject->GraphicsTransform.getOrigin() + Offset;
-				Game.Camera->setPosition(NewPosition.x(), NewPosition.y(), NewPosition.z());
+				Game.Camera->setPosition(Ogre::Vector3(NewPosition.x(), NewPosition.y(), NewPosition.z()));
 			}
 		} break;
 	}
@@ -76,7 +76,7 @@ void _Camera::HandleMove(const btVector3 &Direction, float Speed) {
 				btVector3 Move(Direction);
 				Move.normalize();
 				Move *= Speed;
-				btQuaternion Orientation(Game.Camera->getOrientation().x, Game.Camera->getOrientation().y, Game.Camera->getOrientation().z, Game.Camera->getOrientation().w);
+				btQuaternion Orientation(Game.Camera->getDerivedOrientation().x, Game.Camera->getDerivedOrientation().y, Game.Camera->getDerivedOrientation().z, Game.Camera->getDerivedOrientation().w);
 				Velocity = quatRotate(Orientation, Move);
 			}
 			else
@@ -105,10 +105,10 @@ void _Camera::HandleMouse(int UpdateX, int UpdateY) {
 	btVector3 Direction(SinPitch * CosYaw, CosPitch, SinPitch * SinYaw);
 	switch(Type) {
 		case FREEMOVE: {
-			Game.Camera->setDirection(Direction.x(), Direction.y(), Direction.z());
+			Game.Camera->setDirection(Ogre::Vector3(Direction.x(), Direction.y(), Direction.z()));
 		} break;
 		case THIRD_PERSON: {
-			Game.Camera->setDirection(Direction.x(), Direction.y(), Direction.z());
+			Game.Camera->setDirection(Ogre::Vector3(Direction.x(), Direction.y(), Direction.z()));
 			Offset = Direction * -Distance;
 		} break;
 	}
